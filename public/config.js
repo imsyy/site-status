@@ -1,12 +1,12 @@
 window.Config = {
 
   // 显示标题
-  SiteName: 'IMSYY 站点监测',
+  SiteName: '状态检测 | 心纪元',
 
   // UptimeRobot Api Keys
   // 支持 Monitor-Specific 和 Read-Only
   ApiKeys: [
-    'u1022423-6ffcda436b183008644c691c',
+    'ur1813184-3944ca6c405e0046b6fb5878',
   ],
 
   // 日志天数
@@ -19,15 +19,15 @@ window.Config = {
   Navi: [
     {
       text: '主页',
-      url: 'https://www.imsyy.top/'
+      url: 'https://www.mcxin.top/'
     },
     {
-      text: '博客',
-      url: 'https://blog.imsyy.top/'
+      text: '地图',
+      url: 'https://map.mcxin.top/'
     },
     {
-      text: 'GitHub',
-      url: 'https://github.com/imsyy/'
+      text: '账号',
+      url: 'https://account.mcxin.top/'
     },
   ],
 };
