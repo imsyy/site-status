@@ -167,20 +167,21 @@ const dataProcessing = (data, dates) => {
  */
 const changeSite = (data, status) => {
   try {
-    const isAllStatusNotOk = data.every((item) => item.status !== "ok");
+    const isAllStatusOk = data.every((item) => item.status === "ok");
     const isAnyStatusOk = data.some((item) => item.status === "ok");
 
     // 更改图标
     const faviconLink = document.querySelector('link[rel="shortcut icon"]');
-    faviconLink.href =
-      isAllStatusNotOk || isAnyStatusOk
-        ? "./favicon-down.ico"
-        : "./favicon.ico";
+    faviconLink.href = isAllStatusOk ? "./favicon.ico" : "./favicon-down.ico";
 
     // 更改状态
-    status.changeSiteState(
-      isAllStatusNotOk ? "allError" : isAnyStatusOk ? "error" : "normal"
-    );
+    if (isAllStatusOk) {
+      status.changeSiteState("normal");
+    } else if (isAnyStatusOk) {
+      status.changeSiteState("error");
+    } else {
+      status.changeSiteState("allError");
+    }
   } catch (error) {
     console.error("更改站点状态时发生错误：", error);
     // 处理错误状态
