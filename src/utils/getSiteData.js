@@ -172,7 +172,9 @@ const changeSite = (data, status) => {
 
     // 更改图标
     const faviconLink = document.querySelector('link[rel="shortcut icon"]');
-    faviconLink.href = isAllStatusOk ? "./favicon.ico" : "./favicon-down.ico";
+    faviconLink.href = isAllStatusOk
+      ? "./images/favicon.ico"
+      : "./images/favicon-down.ico";
 
     // 更改状态
     if (isAllStatusOk) {
