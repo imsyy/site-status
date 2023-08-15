@@ -1,4 +1,5 @@
 $main-background: #ffffff;
+$main-hover-color: #efefef;
 $primary-color: #3bd672;
 $secondary-color: #747474;
 $normal-color: #63ffbd;
@@ -74,7 +75,7 @@ body {
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin: auto 0 2px 20px;
+        margin: auto 20px 2px 20px;
         .icon {
           position: relative;
           width: 40px;
@@ -125,15 +126,65 @@ body {
             margin-top: 4px;
             opacity: 0.8;
             .time {
-              span {
-                &:nth-of-type(2) {
+              display: flex;
+              align-items: center;
+              .last-update {
+                &::after {
+                  content: "|";
+                  margin: 0 8px;
+                }
+              }
+              .timeout {
+                line-height: normal;
+                .ant-statistic-content {
+                  color: #fff;
+                  line-height: normal;
+                  font-size: 14px;
+                  font-family: "HarmonyOS_Regular", sans-serif;
                   &::before {
-                    content: "|";
-                    margin: 0 8px;
+                    content: "距下次更新";
+                    margin-right: 4px;
                   }
                 }
               }
             }
+          }
+        }
+        .overview {
+          margin-left: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          .count {
+            opacity: 0.8;
+            margin-bottom: 4px;
+            .name {
+              margin-right: 4px;
+            }
+            .num {
+              font-size: 18px;
+            }
+          }
+          .status-num {
+            display: flex;
+            font-size: 20px;
+            .ok-count {
+              display: flex;
+              align-items: center;
+              &::after {
+                content: "/";
+                font-size: 16px;
+                margin: 0 6px;
+              }
+            }
+            .name {
+              margin-right: 4px;
+            }
+          }
+        }
+        @media (max-width: 670px) {
+          .overview {
+            display: none;
           }
         }
         @media (max-width: 520px) {
@@ -182,6 +233,7 @@ body {
         border-radius: 16px;
         background-color: $main-background;
         box-shadow: 0 10px 30px #0000001a;
+        overflow: hidden;
         .loading {
           width: 36px;
           height: 36px;
@@ -193,13 +245,21 @@ body {
         .sites {
           width: 100%;
           .site {
+            cursor: pointer;
             padding: 30px;
             border-bottom: 1px solid #e6e7e8;
+            transition: background-color 0.3s;
             &:nth-last-child(1) {
               border-bottom: none;
             }
+            &:hover {
+              background-color: $main-hover-color;
+            }
             &.error {
               background-color: #ff00000f;
+              &:hover {
+                background-color: $main-hover-color;
+              }
               .timeline {
                 .line {
                   &.none {
@@ -376,6 +436,13 @@ body {
   }
 }
 
+// 站点状态弹窗
+.ant-modal {
+  width: 68vw !important;
+  max-width: 960px;
+  min-width: min(30rem, 100vw);
+}
+
 // 呼吸动画
 @keyframes breathing {
   0% {
@@ -425,7 +492,8 @@ body {
 }
 
 // 滚动条
-.ms-track-global {
+.ms-track-global,
+.ms-track-box {
   .ms-track {
     background: transparent !important;
     border-color: transparent !important;
