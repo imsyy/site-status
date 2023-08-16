@@ -12,6 +12,8 @@ import dayjs from "dayjs";
  */
 export const getSiteData = async (apikey, days, cache, status) => {
   try {
+    status.changeSiteState("loading");
+    
     const dates = [];
     const today = dayjs(new Date().setHours(0, 0, 0, 0));
 
@@ -79,6 +81,7 @@ export const getSiteData = async (apikey, days, cache, status) => {
     changeSite(processedData, status);
     return processedData;
   } catch (error) {
+    status.changeSiteState("wrong");
     console.error("获取监控数据时出错：" + error);
   }
 };
@@ -155,7 +158,7 @@ const dataProcessing = (data, dates) => {
 
     if (monitor.status === 2) result.status = "ok";
     if (monitor.status === 9) result.status = "down";
-    
+
     return result;
   });
 };

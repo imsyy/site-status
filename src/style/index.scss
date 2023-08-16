@@ -134,17 +134,10 @@ body {
                   margin: 0 8px;
                 }
               }
-              .timeout {
-                line-height: normal;
-                .ant-statistic-content {
-                  color: #fff;
-                  line-height: normal;
-                  font-size: 14px;
-                  font-family: "HarmonyOS_Regular", sans-serif;
-                  &::before {
-                    content: "距下次更新";
-                    margin-right: 4px;
-                  }
+              .update {
+                .refresh {
+                  cursor: pointer;
+                  margin-left: 6px;
                 }
               }
             }

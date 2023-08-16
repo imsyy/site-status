@@ -15,18 +15,23 @@ const App = observer(() => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const countDays = import.meta.env.VITE_COUNT_DAYS;
 
-  useEffect(() => {
-    // 获取站点数据
+  // 获取站点数据
+  const getSiteStatusData = () => {
+    setSiteData(null);
     getSiteData(apiKey, countDays, cache, status).then((res) => {
       console.log(res);
       setSiteData(res);
     });
+  };
+
+  useEffect(() => {
+    getSiteStatusData();
   }, [apiKey, countDays]);
 
   return (
     <>
       <GlobalScrollbar />
-      <Header />
+      <Header getSiteData={getSiteStatusData} />
       <main id="main">
         <div className="container">
           <div className="all-site">

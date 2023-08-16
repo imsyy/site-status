@@ -1,21 +1,18 @@
+import { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Statistic } from "antd";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { formatTimestamp } from "@/utils/timeTools";
+import { Refresh } from "@icon-park/react";
+import { message } from "antd";
 import CountUp from "react-countup";
 import useStores from "@/hooks/useStores";
 
-// 倒计时数据
-const { Countdown } = Statistic;
-const deadline = Date.now() + 1000 * 60 * 5;
-
-const refreshNow = () => {
-  console.log("finished");
-};
-
-const Header = observer(() => {
+const Header = observer(({ getSiteData }) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const { status, cache } = useStores();
+  const [lastClickTime, setLastClickTime] = useState(0);
 
+  // 加载配置
   const siteName = import.meta.env.VITE_SITE_NAME;
 
   // 状态文本
@@ -27,8 +24,25 @@ const Header = observer(() => {
     wrong: "数据请求失败",
   };
 
+  // 刷新状态
+  const refreshStatus = () => {
+    const currentTime = Date.now();
+    if (currentTime - lastClickTime < 60000) {
+      messageApi.open({
+        key: "updata",
+        type: "warning",
+        content: "请稍后再尝试刷新",
+      });
+      return false;
+    }
+    cache.changeSiteData(null);
+    getSiteData();
+    setLastClickTime(currentTime);
+  };
+
   return (
     <header id="header" className={status.siteState}>
+      {contextHolder}
       <SwitchTransition mode="out-in">
         <CSSTransition key={status.siteState} classNames="fade" timeout={300}>
           <div className={`cover ${status.siteState}`} />
@@ -68,13 +82,10 @@ const Header = observer(() => {
                           formatTimestamp(cache.siteData?.timestamp).justTime
                         }`}
                       </span>
-                      {/* <span>更新频率 5 分钟</span> */}
-                      <Countdown
-                        className="timeout"
-                        title={null}
-                        value={deadline}
-                        onFinish={refreshNow}
-                      />
+                      <div className="update">
+                        <span>更新频率 5 分钟</span>
+                        <Refresh className="refresh" onClick={refreshStatus} />
+                      </div>
                     </div>
                   )}
                 </CSSTransition>

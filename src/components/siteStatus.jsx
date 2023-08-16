@@ -116,7 +116,7 @@ const SiteStatus = ({ siteData, days, status }) => {
                 footer={null}
                 onOk={closeSiteDetails}
                 onCancel={closeSiteDetails}
-                bodyStyle={{ marginTop: "12px" }}
+                bodyStyle={{ marginTop: "20px" }}
               >
                 <SiteCharts siteDetails={siteDetailsData} />
               </Modal>
