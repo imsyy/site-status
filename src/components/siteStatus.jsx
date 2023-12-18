@@ -11,6 +11,9 @@ const SiteStatus = ({ siteData, days, status }) => {
   const [siteDetailsShow, setSiteDetailsShow] = useState(false);
   const [siteDetailsData, setSiteDetailsData] = useState(null);
 
+  // 是否显示链接
+  const isShowLinks = import.meta.env.VITE_SHOW_LINKS === "true";
+
   // 开启弹窗
   const showSiteDetails = (data) => {
     setSiteDetailsShow(true);
@@ -38,7 +41,9 @@ const SiteStatus = ({ siteData, days, status }) => {
                 >
                   <div className="meta">
                     <div className="name">{site.name}</div>
-                    <CustomLink iconDom={<LinkTwo />} to={site.url} />
+                    {isShowLinks ? (
+                      <CustomLink iconDom={<LinkTwo />} to={site.url} />
+                    ) : null}
                     <div
                       className={`status ${
                         site.status === "ok"
