@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 export const getSiteData = async (apikey, days, cache, status) => {
   try {
     status.changeSiteState("loading");
-    
+
     const dates = [];
     const today = dayjs(new Date().setHours(0, 0, 0, 0));
 
@@ -175,6 +175,9 @@ const changeSite = (data, status) => {
     const isAnyStatusOk = data.some((item) => item.status === "ok");
     const okCount = data.filter((item) => item.status === "ok").length;
     const downCount = data.filter((item) => item.status === "down").length;
+    const unknownCount = data.filter(
+      (item) => item.status === "unknown"
+    ).length;
 
     // 更改图标
     const faviconLink = document.querySelector('link[rel="shortcut icon"]');
@@ -196,6 +199,7 @@ const changeSite = (data, status) => {
       count: data.length,
       okCount,
       downCount,
+      unknownCount,
     });
   } catch (error) {
     console.error("更改站点状态时发生错误：", error);

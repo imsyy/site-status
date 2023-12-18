@@ -6,6 +6,8 @@ $normal-color: #63ffbd;
 $normal-background-color: #3bd672;
 $error-color: #ff9595;
 $error-background-color: #de484a;
+$unknown-color: #4f4f4f;
+$unknown-background-color: #2f2f2f;
 $allErrors-color: #ff8c8c;
 $loading-color: #58d0ff;
 
@@ -170,6 +172,15 @@ body {
                 margin: 0 6px;
               }
             }
+            .unknownCount-count {
+              display: flex;
+              align-items: center;
+              &::before {
+                content: "/";
+                font-size: 16px;
+                margin: 0 6px;
+              }
+            }
             .name {
               margin-right: 4px;
             }
@@ -287,6 +298,15 @@ body {
                     background-color: $error-background-color;
                     &::after {
                       background-color: $error-background-color;
+                    }
+                  }
+                }
+                &.unknown {
+                  color: $unknown-background-color;
+                  .icon {
+                    background-color: $unknown-background-color;
+                    &::after {
+                      background-color: $unknown-background-color;
                     }
                   }
                 }

@@ -127,6 +127,18 @@ const Header = observer(({ getSiteData }) => {
                         />
                       </span>
                     </div>
+                    {status.siteOverview?.unknownCount ? (
+                      <div className="unknownCount-count">
+                        <span className="name">未知</span>
+                        <span className="num">
+                          <CountUp
+                            className="num"
+                            end={status.siteOverview.unknownCount}
+                            duration={1}
+                          />
+                        </span>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               ) : (
