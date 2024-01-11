@@ -58,6 +58,9 @@ export default ({ mode }) =>
         "@": "/src",
       },
     },
+    server: {
+      port: 6598,
+    },
     build: {
       minify: "terser",
       terserOptions: {
