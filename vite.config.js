@@ -36,7 +36,7 @@ export default ({ mode }) =>
         manifest: {
           name: loadEnv(mode, process.cwd()).VITE_SITE_NAME,
           short_name: loadEnv(mode, process.cwd()).VITE_SITE_NAME,
-          description: "一个简约的站点监测",
+          description: loadEnv(mode, process.cwd()).VITE_SITE_DES,
           display: "standalone",
           start_url: "/",
           theme_color: "#fff",
