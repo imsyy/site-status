@@ -7,23 +7,26 @@ import CustomLink from "@/components/customLink";
 import SiteCharts from "@/components/siteCharts";
 
 const SiteStatus = ({ siteData, days, status }) => {
-  // 弹窗数据
   const [siteDetailsShow, setSiteDetailsShow] = useState(false);
   const [siteDetailsData, setSiteDetailsData] = useState(null);
-
-  // 是否显示链接
   const isShowLinks = import.meta.env.VITE_SHOW_LINKS === "true";
 
-  // 开启弹窗
   const showSiteDetails = (data) => {
     setSiteDetailsShow(true);
     setSiteDetailsData(data);
   };
 
-  // 关闭弹窗
   const closeSiteDetails = () => {
     setSiteDetailsShow(false);
     setSiteDetailsData(null);
+  };
+
+  const getErrorClass = (uptime) => {
+    if (uptime >= 95) return "error1";
+    else if (uptime >= 90) return "error2";
+    else if (uptime >= 80) return "error3";
+    else if (uptime >= 70) return "error4";
+    return "error5";
   };
 
   return (
@@ -33,42 +36,18 @@ const SiteStatus = ({ siteData, days, status }) => {
           status.siteState !== "loading" && siteData ? (
             <div className="sites">
               {siteData.map((site) => (
-                <div
-                  key={site.id}
-                  className={`site ${
-                    site.status !== "ok" ? "error" : "normal"
-                  }`}
-                >
+                <div key={site.id} className={`site ${site.status !== "ok" ? getErrorClass(site.average) : "normal"}`}>
                   <div className="meta">
                     <div className="name">{site.name}</div>
-                    {isShowLinks ? (
-                      <CustomLink iconDom={<LinkTwo />} to={site.url} />
-                    ) : null}
-                    <div
-                      className={`status ${
-                        site.status === "ok"
-                          ? "normal"
-                          : site.status === "unknown"
-                          ? "unknown"
-                          : "error"
-                      }`}
-                    >
+                    {isShowLinks ? <CustomLink iconDom={<LinkTwo />} to={site.url} /> : null}
+                    <div className={`status ${site.status === "ok" ? "normal" : site.status === "unknown" ? "unknown" : getErrorClass(site.average)}`}>
                       <div className="icon" />
                       <span className="tip">
-                        {site.status === "ok"
-                          ? "正常访问"
-                          : site.status === "unknown"
-                          ? "状态未知"
-                          : "无法访问"}
+                        {site.status === "ok" ? "正常访问" : site.status === "unknown" ? "状态未知" : "无法访问"}
                       </span>
                     </div>
                   </div>
-                  <div
-                    className="timeline"
-                    onClick={() => {
-                      showSiteDetails(site);
-                    }}
-                  >
+                  <div className="timeline" onClick={() => showSiteDetails(site)}>
                     {site.daily.map((data, index) => {
                       const { uptime, down, date } = data;
                       const time = date.format("YYYY-MM-DD");
@@ -81,25 +60,11 @@ const SiteStatus = ({ siteData, days, status }) => {
                         status = "none";
                         tooltipText = "无数据";
                       } else {
-                        status = "error";
-                        tooltipText = `故障 ${
-                          down.times
-                        } 次，累计 ${formatDuration(
-                          down.duration
-                        )}，可用率 ${formatNumber(uptime)}%`;
+                        status = getErrorClass(uptime);
+                        tooltipText = `故障 ${down.times} 次，累计 ${formatDuration(down.duration)}，可用率 ${formatNumber(uptime)}%`;
                       }
                       return (
-                        <Tooltip
-                          key={index}
-                          // trigger={["hover", "click"]}
-                          title={
-                            <div className="status-tooltip">
-                              <div className="time">{time}</div>
-                              <div className="text">{tooltipText}</div>
-                            </div>
-                          }
-                          destroyTooltipOnHide
-                        >
+                        <Tooltip key={index} title={<div className="status-tooltip"><div className="time">{time}</div><div className="text">{tooltipText}</div></div>} destroyTooltipOnHide>
                           <div className={`line ${status}`} />
                         </Tooltip>
                       );
@@ -108,31 +73,13 @@ const SiteStatus = ({ siteData, days, status }) => {
                   <div className="summary">
                     <div className="now">今天</div>
                     <div className="note">
-                      {site.total.times
-                        ? `最近 ${days} 天内故障 ${
-                            site.total.times
-                          } 次，累计 ${formatDuration(
-                            site.total.duration
-                          )}，平均可用率 ${site.average}%`
-                        : `最近 ${days} 天内可用率 ${site.average}%`}
+                      {site.total.times ? `最近 ${days} 天内故障 ${site.total.times} 次，累计 ${formatDuration(site.total.duration)}，平均可用率 ${site.average}%` : `最近 ${days} 天内可用率 ${site.average}%`}
                     </div>
-                    <div className="day">
-                      {site.daily[site.daily.length - 1].date.format(
-                        "YYYY-MM-DD"
-                      )}
-                    </div>
+                    <div className="day">{site.daily[site.daily.length - 1].date.format("YYYY-MM-DD")}</div>
                   </div>
                 </div>
               ))}
-              {/* 站点详情 */}
-              <Modal
-                title={siteDetailsData?.name}
-                open={siteDetailsShow}
-                footer={null}
-                onOk={closeSiteDetails}
-                onCancel={closeSiteDetails}
-                bodyStyle={{ marginTop: "20px" }}
-              >
+              <Modal title={siteDetailsData?.name} open={siteDetailsShow} footer={null} onOk={closeSiteDetails} onCancel={closeSiteDetails} bodyStyle={{ marginTop: "20px" }}>
                 <SiteCharts siteDetails={siteDetailsData} />
               </Modal>
             </div>
@@ -140,21 +87,7 @@ const SiteStatus = ({ siteData, days, status }) => {
             <div className="loading" />
           )
         ) : (
-          <Result
-            status="error"
-            title="调用超限或请求错误，请刷新后重试"
-            extra={
-              <Button
-                type="primary"
-                danger
-                onClick={() => {
-                  location.reload();
-                }}
-              >
-                重试
-              </Button>
-            }
-          />
+          <Result status="error" title="调用超限或请求错误，请刷新后重试" extra={<Button type="primary" danger onClick={() => { location.reload(); }}>重试</Button>} />
         )}
       </CSSTransition>
     </SwitchTransition>
