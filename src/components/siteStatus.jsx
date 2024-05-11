@@ -26,6 +26,15 @@ const SiteStatus = ({ siteData, days, status }) => {
     setSiteDetailsData(null);
   };
 
+  // 根据可用率计算颜色
+  const getStatusColor = (uptime) => {
+    // 将可用率转换为百分比
+    const percentage = 100 - uptime;
+    // 计算HSL颜色，色相从60（黄色）到0（红色）
+    const hue = Math.max(0, 60 - 0.6 * percentage);
+    return `hsl(${hue}, 100%, 50%)`;
+  };
+
   return (
     <SwitchTransition mode="out-in">
       <CSSTransition key={status.siteState} classNames="fade" timeout={100}>
@@ -88,10 +97,11 @@ const SiteStatus = ({ siteData, days, status }) => {
                           down.duration
                         )}，可用率 ${formatNumber(uptime)}%`;
                       }
+                      // 根据可用率设置颜色
+                      const color = getStatusColor(uptime);
                       return (
                         <Tooltip
                           key={index}
-                          // trigger={["hover", "click"]}
                           title={
                             <div className="status-tooltip">
                               <div className="time">{time}</div>
@@ -100,7 +110,7 @@ const SiteStatus = ({ siteData, days, status }) => {
                           }
                           destroyTooltipOnHide
                         >
-                          <div className={`line ${status}`} />
+                          <div className={`line ${status}`} style={{ backgroundColor: color }} />
                         </Tooltip>
                       );
                     })}
