@@ -109,6 +109,19 @@ const getMonitorsData = async (postdata, status) => {
  * @returns {Array} - 处理后的数据
  */
 const dataProcessing = (data, dates) => {
+  try {
+    let siteSortArr = import.meta.env.VITE_SITE_SORT;
+    siteSortArr = siteSortArr.split(",").map(v => v.trim()).reverse();
+
+    data = data.sort((v1, v2) => {
+      const i1 = siteSortArr.indexOf(v1.friendly_name.trim()) + 1;
+      const i2 = siteSortArr.indexOf(v2.friendly_name.trim()) + 1;
+      return (i2 == -1 ? 0 : i2) - (i1 == -1 ? 0 : i1);
+    });
+  } catch (error) {
+    console.error("处理监控数据网站排序时出错：", error);
+  }
+
   return data?.map((monitor) => {
     const ranges = monitor.custom_uptime_ranges.split("-");
     const average = formatNumber(ranges.pop());
