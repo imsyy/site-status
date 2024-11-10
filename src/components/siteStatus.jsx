@@ -68,7 +68,7 @@ const SiteStatus = ({ siteData, days, status }) => {
             </Button>
           }
           style={{
-            borderRadius: "6px !important", // 输入框圆角
+            border-radius: "6px !important", // 输入框圆角
           }}
         />
         <style>
