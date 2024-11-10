@@ -49,7 +49,7 @@ const SiteStatus = ({ siteData, days, status }) => {
         footer={null}
         closable={false}
         centered
-        style={{ width: "520px" }} // 设置弹窗宽度
+        style={{ width: "520px !important" }} // 设置弹窗宽度
       >
         <Input.Password
           placeholder="输入密码"
@@ -61,14 +61,14 @@ const SiteStatus = ({ siteData, days, status }) => {
               type="primary"
               onClick={handlePasswordSubmit}
               style={{
-                height: "30px",
+                height: "30px !important",
               }}
             >
               提交
             </Button>
           }
           style={{
-            borderRadius: "6px", // 输入框圆角
+            borderRadius: "6px !important", // 输入框圆角
           }}
         />
         <style>
