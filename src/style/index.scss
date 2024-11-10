@@ -10,7 +10,10 @@ $unknown-color: #4f4f4f;
 $unknown-background-color: #2f2f2f;
 $allErrors-color: #ff8c8c;
 $loading-color: #58d0ff;
-
+#输入框圆角
+.ant-input-affix-wrapper{
+    border-radius: 6px !important;
+}
 * {
   margin: 0;
   padding: 0;
