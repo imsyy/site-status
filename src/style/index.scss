@@ -11,6 +11,13 @@ $unknown-background-color: #2f2f2f;
 $allErrors-color: #ff8c8c;
 $loading-color: #58d0ff;
 
+
+
+.ant-input-affix-wrapper{
+    border-radius: 6px !important;
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -451,7 +458,7 @@ body {
 
 // 站点状态弹窗
 .ant-modal {
-  width: 68vw !important;
+  width: 68vw;
   max-width: 960px;
   min-width: min(30rem, 100vw);
 }
