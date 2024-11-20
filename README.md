@@ -22,6 +22,17 @@
 - 在 `.env` 文件中进行配置修改
 - 将打包后的文件上传至网站空间或者直接使用 `Vercel` 或者 `Cloudflare` 直接部署该项目
 
+## 如何部署到 Cloudflare Pages
+
+- `star` 并 `fork` 😘
+- 在 `.env` 文件中进行配置修改,并将 `VITE_API_KEY` 项改为 `VITE_API_KEY = ""`
+- 登入到 [Cloudflare Dashboard](https://dash.cloudflare.com/) 并进入 `Workers 和 Pages` 
+- 点击 `创建` 并 `连接到 Git`
+- 选择 `第一步` fork 的仓库 并点击 `开始设置`
+- `项目名称` 和 `生产分支` 不需要修改; `框架预设` 选择  `Next.js` ;`构建命令`更改为 `pnpm build` ;`构建输出目录` 更改为 `dist` ;
+- 点击 `环境变量` 并 `添加环境变量` ；`变量名称` 为 `VITE_API_KEY` ;值为 `事先准备` 中得到的 `API KEY`
+- 点击 `保存并部署`
+
 ## 部署
 
 ### 安装依赖
