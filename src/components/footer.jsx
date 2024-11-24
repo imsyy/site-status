@@ -24,7 +24,7 @@ const Footer = () => {
         <p>
           <CustomLink
             text={Package.alia}
-            to="https://github.com/imsyy/site-status"
+            to="https://github.com/LddsnHong/site-status"
           />
           &nbsp;Version&nbsp;{Package.version}
         </p>
@@ -36,7 +36,7 @@ const Footer = () => {
         <p>
           Copyright&nbsp;&copy;&nbsp;2020&nbsp;-&nbsp;{new Date().getFullYear()}
           &nbsp;
-          <CustomLink to="https://www.imsyy.top/" text="無名" />
+          <CustomLink to="https://wsdm1.top/" text="铃铛岛少年泓" />
           {siteIcp ? (
             <React.Fragment>
               &nbsp;|&nbsp;

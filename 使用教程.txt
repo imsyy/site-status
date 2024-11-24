@@ -1,0 +1,20 @@
+您需要先到 [UptimeRobot](https://uptimerobot.com/dashboard) 添加站点监控，并在 `My Settings` 页面获取 类型为 `Read-Only API Key` 的 `API Key`
+然后把获取到的API Key替换掉 ".env" 文件里的VITE_API_KEY值
+
+部署
+
+安装依赖
+
+# 若没有 pnpm
+npm install pnpm -g
+
+# 安装依赖
+pnpm install
+
+
+开发
+pnpm dev
+打包
+pnpm build
+
+打包生成的文件路径为当前目录下的dist文件夹
