@@ -4,7 +4,11 @@
 
 ![IMSYY-站点监测.png](https://s1.ax1x.com/2023/07/20/pCHnLLt.png)
 
-## 特色
+## 👀 Demo
+
+- [IMSYY-站点监测](https://status.imsyy.top/)
+
+## 🎉 特色
 
 - 站点状态总览
 - 流畅的动画
@@ -27,7 +31,7 @@
 ### 安装依赖
 
 ```bash
-# 若没有 pnpm
+# 建议使用 pnpm
 npm install pnpm -g
 
 # 安装依赖
@@ -48,4 +52,4 @@ pnpm build
 
 ## 鸣谢
 
- - [uptime-status](https://github.com/yb/uptime-status) 基于此项目进行修改
+- [uptime-status](https://github.com/yb/uptime-status) 受此项目启发

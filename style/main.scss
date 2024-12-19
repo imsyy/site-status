@@ -1,0 +1,57 @@
+:root {
+  --main-bg-color: rgb(247, 247, 247);
+  --main-card-color: rgb(255, 255, 255);
+  --mian-border-color: rgba(255, 255, 255, 0.09);
+  --main-box-shadow: rgba(0, 0, 0, 0.1);
+  --cover-fill-color: 247, 247, 247;
+  // 背景
+  --loading-cover: radial-gradient(circle, #00c6ff, #0072ff, #00d2ff, #00b0ff);
+  --error-cover: radial-gradient(circle, #ff4b5c, #ff2a3b, #ff6f5e, #f15239);
+  --warn-cover: radial-gradient(circle, #ffa500, #ff8c00, #ff7f00, #ff6600);
+  --unknown-cover: radial-gradient(circle, #7f8c8d, #b5b5b5, #858c8d, #34495e);
+  --normal-cover: radial-gradient(circle, #2ecc71, #27ae60, #16a085, #1abc9c);
+  // 主颜色
+  --loading-color: #58d0ff;
+  --normal-color: #3bd672;
+  --error-color: #de484a;
+  --warn-color: #f39c12;
+  --unknown-color: #7f8c8d;
+  // 深色模式
+  &.dark-mode {
+    --main-bg-color: rgb(36, 36, 36);
+    --main-card-color: rgb(66, 66, 66);
+    --mian-border-color: rgba(0, 0, 0, 0.1);
+    --cover-fill-color: 36, 36, 36;
+    --cover-filter: brightness(80%);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+  -webkit-user-drag: none;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-bg-color);
+  overflow: hidden;
+}
+
+#nuxt-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.n-scrollbar {
+  .n-scrollbar-rail {
+    right: 0 !important;
+  }
+  .n-scrollbar-rail__scrollbar {
+    z-index: 9999 !important;
+  }
+}
