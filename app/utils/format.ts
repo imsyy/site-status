@@ -2,7 +2,7 @@
 import type {
   MonitorsDataResult,
   SiteDaysStatus,
-  SiteStatus,
+  SiteStatusType,
 } from "~/types/main";
 import { formatNumber } from "./helper";
 import dayjs from "dayjs";
@@ -21,7 +21,7 @@ export const formatSiteData = (
   const { showLink } = configPublic;
   const sites: any[] = data.monitors;
   // 解析站点数据
-  const formatData = sites?.map((site: any): SiteStatus => {
+  const formatData = sites?.map((site: any): SiteStatusType => {
     // 解析每日数据
     const ranges = site.custom_uptime_ranges.split("-");
     const percent = formatNumber(ranges.pop() || 0);

@@ -16,15 +16,14 @@
             <n-popover>
               <template #trigger>
                 <n-tag :bordered="false" size="small" round>
-                  {{ siteType[site.type].tag }} /
+                  {{ siteType[site.type]?.tag || "HTTP" }} /
                   {{ formatInterval(site?.interval) }}
                 </n-tag>
               </template>
               <n-text>
                 {{
-                  `每间隔 ${formatInterval(site?.interval)}，` +
-                  siteType[site.type].text +
-                  "，来判断段站点是否运行正常"
+                  `每间隔 ${formatInterval(site?.interval)}，` + siteType[site.type]?.text ||
+                  "30s" + "，来判断段站点是否运行正常"
                 }}
               </n-text>
             </n-popover>
@@ -44,27 +43,19 @@
           </n-flex>
           <n-flex
             :style="{
-              '--bg-color': `var(--${siteStatus[site.status].type}-color)`,
+              '--bg-color': `var(--${siteStatus[site.status]?.type || 'unknown'}-color)`,
             }"
             class="status"
             align="center"
           >
             <div v-if="site.status !== 0" class="point" />
             <Icon v-else name="icon:pause" />
-            <n-text>{{ siteStatus[site.status].text }}</n-text>
+            <n-text>{{ siteStatus[site.status]?.text }}</n-text>
           </n-flex>
         </n-flex>
         <!-- 每日数据 -->
-        <n-flex
-          v-if="site?.days?.length"
-          :size="2"
-          class="timeline"
-          justify="space-between"
-        >
-          <n-popover
-            v-for="(day, dayIndex) in site.days"
-            :key="day?.date || dayIndex"
-          >
+        <n-flex v-if="site?.days?.length" :size="2" class="timeline" justify="space-between">
+          <n-popover v-for="(day, dayIndex) in site.days" :key="day?.date || dayIndex">
             <template #trigger>
               <div
                 :style="{
@@ -132,15 +123,13 @@
 </template>
 
 <script setup lang="ts">
-import type { SiteStatus, SiteType } from "~/types/main";
+import type { SiteStatusType, SiteType } from "~~/types/main";
 import { siteType, siteStatus } from "~/assets/data/text";
 
 const statusStore = useStatusStore();
 
 // 全部站点数据
-const siteData = computed<SiteStatus[] | undefined>(
-  () => statusStore.siteData?.data,
-);
+const siteData = computed<SiteStatusType[] | undefined>(() => statusStore.siteData?.data);
 
 // 当天站点状态
 const getDayStatus = (percent: number): SiteType => {

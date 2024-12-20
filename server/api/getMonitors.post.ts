@@ -1,8 +1,7 @@
 // https://uptimerobot.com/api/#methods
-import type { MonitorsDataResult, MonitorsResult } from "~/types/main";
+import type { MonitorsDataResult, MonitorsResult } from "~~/types/main";
 import { getCache, setCache } from "~/utils/cache-server";
 import { formatSiteData } from "~/utils/format";
-import jwt from "jsonwebtoken";
 import dayjs from "dayjs";
 
 const getRanges = ():
@@ -21,9 +20,7 @@ const getRanges = ():
     // 生成日期范围数组
     for (let d = 0; d < days; d++) dates.push(today.subtract(d, "day"));
     // 生成自定义历史数据范围
-    const ranges = dates.map(
-      (date) => `${date.unix()}_${date.add(1, "day").unix()}`,
-    );
+    const ranges = dates.map((date) => `${date.unix()}_${date.add(1, "day").unix()}`);
     const start = dates[dates.length - 1].unix();
     const end = dates[0].add(1, "day").unix();
     ranges.push(`${start}_${end}`);
@@ -49,12 +46,8 @@ export default defineEventHandler(async (event): Promise<MonitorsResult> => {
       const token = getCookie(event, "authToken");
       if (!token) throw new Error("Please log in first");
       // 验证 Token
-      try {
-        jwt.verify(token, siteSecretKey);
-      } catch (error) {
-        console.error("Token verification error:", error);
-        throw new Error("Token verification error");
-      }
+      const isLogin = await verifyJwt(token);
+      if (!isLogin) throw new Error("Invalid or expired token");
     }
     // 缓存键
     const cacheKey = "site-data";

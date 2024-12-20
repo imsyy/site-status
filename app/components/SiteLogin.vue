@@ -2,9 +2,7 @@
 <template>
   <div class="site-login">
     <n-card class="login-content" hoverable>
-      <n-alert :show-icon="false">
-        站点已开启密码保护，请输入密码登录后查看
-      </n-alert>
+      <n-alert :show-icon="false"> 站点已开启密码保护，请输入密码登录后查看 </n-alert>
       <n-form ref="formRef" :model="formData" :rules="formRules">
         <n-form-item label="密码" path="password">
           <n-input
@@ -16,12 +14,7 @@
           />
         </n-form-item>
       </n-form>
-      <n-button
-        :loading="loading"
-        :disabled="loading"
-        type="primary"
-        @click="toLogin"
-      >
+      <n-button :loading="loading" :disabled="loading" type="primary" @click="toLogin">
         {{ loading ? "正在登录" : "登录" }}
       </n-button>
     </n-card>
@@ -30,6 +23,7 @@
 
 <script setup lang="ts">
 import type { FormInst, FormRules } from "naive-ui";
+import SHA256 from "crypto-js/sha256";
 
 const statusStore = useStatusStore();
 
@@ -56,10 +50,8 @@ const toLogin = useDebounce(
       const delay = Math.floor(Math.random() * 1000) + 500;
       await sleep(delay);
       // 尝试登录
-      await $fetch("/api/verify", {
-        method: "POST",
-        body: { password: formData.value.password },
-      });
+      const password = SHA256(formData.value.password).toString();
+      await $fetch("/api/verify", { method: "POST", body: { password } });
       statusStore.loginStatus = true;
       window.$message.success("登录成功");
     } catch (error) {

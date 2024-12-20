@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import { verifyJwt } from "../utils/jwt";
 
 export default defineEventHandler(
   async (
@@ -23,10 +23,8 @@ export default defineEventHandler(
         return { code: 401, message: "User not authenticated" };
       }
       // 验证 Token
-      try {
-        jwt.verify(token, siteSecretKey);
-      } catch (error) {
-        console.error("Token verification error:", error);
+      const isLogin = await verifyJwt(token);
+      if (!isLogin) {
         setResponseStatus(event, 401);
         return { code: 401, message: "Invalid or expired token" };
       }

@@ -39,7 +39,7 @@ const siteLoaded = ref<boolean>(false);
 // 验证状态
 const checkSite = async () => {
   try {
-    const result = await $fetch("/api/check");
+    const result = await $fetch("/api/check", { method: "POST" });
     // 更改登录状态
     statusStore.loginStatus = result.code === 200;
   } catch (error) {

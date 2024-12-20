@@ -1,4 +1,5 @@
-import jwt from "jsonwebtoken";
+import { signJwt } from "../utils/jwt";
+import SHA256 from "crypto-js/sha256";
 
 export default defineEventHandler(
   async (
@@ -11,7 +12,7 @@ export default defineEventHandler(
     try {
       const body = await readBody(event);
       const config = useRuntimeConfig();
-      const { sitePassword, siteSecretKey } = config;
+      const { sitePassword } = config;
       if (!sitePassword) {
         throw new Error("Site password not configured");
       }
@@ -20,7 +21,8 @@ export default defineEventHandler(
         throw new Error("Password is required");
       }
       // 密码验证
-      if (body?.password !== sitePassword) {
+      const hashedPassword = SHA256(sitePassword).toString();
+      if (body?.password !== hashedPassword) {
         setResponseStatus(event, 401);
         return {
           code: 401,
@@ -28,10 +30,7 @@ export default defineEventHandler(
         };
       }
       // jwt token
-      const token = jwt.sign({ authenticated: true }, siteSecretKey, {
-        // 过期时间
-        expiresIn: "30d",
-      });
+      const token = await signJwt("30d");
       // 设置 Cookie
       setCookie(event, "authToken", token, {
         httpOnly: true,

@@ -1,6 +1,7 @@
 import AutoImport from "unplugin-auto-import/vite";
 import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
+import pkg from "./package.json";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
@@ -13,11 +14,14 @@ const siteConfig = {
   siteIcp: process.env.SITE_ICP || "",
   countDays: Number(process.env.COUNT_DAYS || 60),
   showLink: process.env.SHOW_LINK === "true" || true,
+  platform: process.env.DEPLOYMENT_PLATFORM || "cloudflare",
+  version: pkg.version,
 };
 
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: "2024-11-11",
+  future: { compatibilityVersion: 4 },
   devtools: { enabled: true },
   devServer: { port: 8566 },
   modules: [
@@ -30,7 +34,8 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@vueuse/nuxt",
     "nuxt-lodash",
-    "@nuxthub/core",
+    // platform
+    siteConfig.platform === "cloudflare" ? "@nuxthub/core" : "",
   ],
   // css
   css: ["~/style/main.scss", "~/style/animate.scss"],
@@ -151,15 +156,18 @@ export default defineNuxtConfig({
     customCollections: [
       {
         prefix: "icon",
-        dir: "./assets/icons",
+        dir: "./app/assets/icons",
         normalizeIconName: false,
       },
     ],
   },
-  // nitro
-  nitro: {
-    experimental: {
-      openAPI: true,
+  // https://eslint.nuxt.com
+  eslint: {
+    config: {
+      stylistic: {
+        quotes: "double",
+        semi: true,
+      },
     },
   },
 });

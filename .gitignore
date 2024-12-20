@@ -23,3 +23,6 @@ sw.*
 .env
 .env.*
 !.env.example
+
+.wrangler
+.vercel

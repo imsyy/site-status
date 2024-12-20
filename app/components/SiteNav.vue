@@ -64,7 +64,8 @@ const iconColor = computed<string | undefined>(() =>
 // 切换明暗模式
 const toggleTheme = () => {
   const themeList = ["light", "dark", "system"];
-  colorMode.preference = themeList[(themeList.indexOf(colorMode.preference) + 1) % 3];
+  const themeValue = themeList[(themeList.indexOf(colorMode.preference) + 1) % 3];
+  if (themeValue) colorMode.preference = themeValue;
 };
 </script>
 

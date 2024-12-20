@@ -15,7 +15,7 @@ export interface SiteDaysStatus {
   };
 }
 
-export interface SiteStatus extends SiteDaysStatus {
+export interface SiteStatusType extends SiteDaysStatus {
   id: number;
   name: string;
   // 0 - 暂停 / 1 - 还未检查 / 2 - 正常 / 8 - 好像寄了 / 9 - 寄了
@@ -44,7 +44,7 @@ export interface MonitorsDataResult {
     unknown: number;
   };
   // 总数据
-  data: SiteStatus[];
+  data: SiteStatusType[];
   // 更新时间
   timestamp: number;
 }
