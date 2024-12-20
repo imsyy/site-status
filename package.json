@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@nuxt/icon": "1.10.2",
+    "@nuxthub/core": "0.8.10",
     "dayjs": "^1.11.13",
     "jsonwebtoken": "^9.0.2",
     "lru-cache": "^11.0.2",
@@ -45,7 +46,8 @@
     "sass": "^1.83.0",
     "typescript": "^5.7.2",
     "unplugin-auto-import": "^0.19.0",
-    "unplugin-vue-components": "^0.27.5"
+    "unplugin-vue-components": "^0.27.5",
+    "wrangler": "^3.99.0"
   },
   "packageManager": "pnpm@9.12.2"
 }

@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@vueuse/nuxt",
     "nuxt-lodash",
+    "@nuxthub/core",
   ],
   // css
   css: ["~/style/main.scss", "~/style/animate.scss"],
