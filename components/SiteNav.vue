@@ -1,10 +1,6 @@
 <!-- 导航栏 -->
 <template>
-  <nav
-    id="nav"
-    :class="{ scroll: statusStore.scrollTop > 0 }"
-    :style="{ color: iconColor }"
-  >
+  <nav id="nav" :class="{ scroll: statusStore.scrollTop > 0 }" :style="{ color: iconColor }">
     <div class="nav-content">
       <span class="logo">{{ config.public.siteTitle }}</span>
       <n-flex align="center" justify="end">
@@ -26,13 +22,7 @@
         </Transition>
         <!-- 菜单 -->
         <n-dropdown trigger="click" :options="navMenu">
-          <n-button
-            :focusable="false"
-            :color="iconColor"
-            size="large"
-            quaternary
-            circle
-          >
+          <n-button :focusable="false" :color="iconColor" size="large" quaternary circle>
             <template #icon>
               <Icon name="icon:menu" />
             </template>
@@ -44,11 +34,15 @@
 </template>
 
 <script setup lang="ts">
-import type { DropdownOption } from "naive-ui";
+import { NIcon, type DropdownOption } from "naive-ui";
+import { Icon } from "#components";
 
 const colorMode = useColorMode();
 const config = useRuntimeConfig();
 const statusStore = useStatusStore();
+
+// 图标渲染
+const renderIcon = (icon: string) => () => h(NIcon, null, () => h(Icon, { name: icon }));
 
 // 导航栏菜单
 const navMenu: DropdownOption[] = [
@@ -70,8 +64,7 @@ const iconColor = computed<string | undefined>(() =>
 // 切换明暗模式
 const toggleTheme = () => {
   const themeList = ["light", "dark", "system"];
-  colorMode.preference =
-    themeList[(themeList.indexOf(colorMode.preference) + 1) % 3];
+  colorMode.preference = themeList[(themeList.indexOf(colorMode.preference) + 1) % 3];
 };
 </script>
 

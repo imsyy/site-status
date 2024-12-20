@@ -1,14 +1,3 @@
-import { NIcon } from "naive-ui";
-import { Icon } from "#components";
-
-/**
- * Render an icon component.
- * @param icon The name of the icon to render.
- * @returns A function that renders the icon component.
- */
-export const renderIcon = (icon: string) => () =>
-  h(NIcon, null, () => h(Icon, { name: icon }));
-
 /**
  * Jump to a link.
  * @param url The link to jump to.
