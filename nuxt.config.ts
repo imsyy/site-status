@@ -97,12 +97,7 @@ export default defineNuxtConfig({
       AutoImport({
         imports: [
           {
-            "naive-ui": [
-              "useDialog",
-              "useMessage",
-              "useNotification",
-              "useLoadingBar",
-            ],
+            "naive-ui": ["useDialog", "useMessage", "useNotification", "useLoadingBar"],
           },
         ],
       }),
@@ -160,5 +155,11 @@ export default defineNuxtConfig({
         normalizeIconName: false,
       },
     ],
+  },
+  // nitro
+  nitro: {
+    experimental: {
+      openAPI: true,
+    },
   },
 });
