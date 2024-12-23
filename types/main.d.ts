@@ -55,3 +55,6 @@ export interface MonitorsResult {
   source: "cache" | "api";
   data: MonitorsDataResult | undefined;
 }
+
+// site lang
+export type SiteLangType = "zh-CN" | "ja-JP" | "ko-KR" | "en";

@@ -16,18 +16,28 @@
     </n-flex>
     <n-flex :size="4" class="text" align="center" vertical>
       <n-p depth="3">
-        <n-text depth="3" @click="jumpLink(linkData.github)">SiteStatus</n-text>
+        <n-text depth="3" @click="jumpLink(linkData.github)">
+          SiteStatus
+        </n-text>
         Version {{ version }}
       </n-p>
       <n-p depth="3">
-        基于
-        <n-text depth="3" @click="jumpLink('https://uptimerobot.com/')"> UptimeRobot </n-text>
-        接口 | 检测频率 5 分钟
+        {{ $t("footer.basedOn") }}
+        <n-text depth="3" @click="jumpLink('https://uptimerobot.com/')">
+          {{ $t("uptimeRobot") }}
+        </n-text>
+        {{ $t("footer.interface") }} |
+        {{ $t("footer.checkFrequency") }}
+        {{ $t("footer.fiveMinutes") }}
       </n-p>
       <n-p depth="3">
         Copyright &copy; 2020 - {{ new Date().getFullYear() }}
         <n-text depth="3" @click="jumpLink(linkData.home)"> IMSYY </n-text>
-        <n-text v-if="siteIcp" depth="3" @click="jumpLink('https://beian.miit.gov.cn/')">
+        <n-text
+          v-if="siteIcp"
+          depth="3"
+          @click="jumpLink('https://beian.miit.gov.cn/')"
+        >
           | {{ siteIcp }}
         </n-text>
       </n-p>

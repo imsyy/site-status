@@ -1,0 +1,68 @@
+{
+  "uptimeRobot": "UptimeRobot",
+  "site": {
+    "loading": "사이트 상태 로딩 중",
+    "unknown": "사이트 상태 불명",
+    "normal": "사이트 정상 운영 중",
+    "error": "모든 사이트에 이상 발생",
+    "warn": "일부 사이트에 이상 발생"
+  },
+  "nav": {
+    "about": "이 사이트에 대해",
+    "logout": "로그아웃"
+  },
+  "header": {
+    "loading": "잠시만 기다려 주세요 ...",
+    "unknown": "일시적인 문제일 수 있습니다. 새로 고침 후 다시 시도해 주세요",
+    "update": "업데이트 시간",
+    "updateAt": "{time} 후 새로 고침"
+  },
+  "footer": {
+    "basedOn": "기반",
+    "interface": "인터페이스",
+    "checkFrequency": "체크 주기",
+    "fiveMinutes": "5 분"
+  },
+  "card": {
+    "unknownDate": "알 수 없는 날짜",
+    "unknownData": "오늘 데이터 없음",
+    "percent": "오늘 가동률 {percent}%",
+    "percentData": "장애 {times} 회, 총 장애 시간 {duration}, 오늘 가동률 {percent}%",
+    "summary": "최근 {days} 일간 가동률 {percent}%",
+    "summaryData": "최근 {days} 일간 장애 {times} 회, 총 장애 시간 {duration}, 평균 가동률 {percent}%",
+    "error": "오류 발생",
+    "errorText": "API 호출 초과 또는 요청 오류 발생. 나중에 다시 시도해 주세요",
+    "status": {
+      "stop": "체크 중지",
+      "unknown": "아직 체크하지 않음",
+      "pause": "체크 중지",
+      "normal": "정상 접근 가능",
+      "error": "사이트 이상",
+      "down": "접속 불가"
+    },
+    "type": {
+      "tip": "{interval}마다 {type}로 사이트가 정상인지 확인합니다",
+      "HTTP": "HTTP 또는 HTTPS 요청을 통해 목표 서비스의 가용성을 모니터링합니다",
+      "KEYWORD": "페이지 내용을 가져와 지정된 키워드가 포함되어 있는지 확인합니다",
+      "PING": "ICMP 프로토콜을 사용하여 목표 서버에 Ping 요청을 보냅니다",
+      "PORT": "목표 서버의 지정된 포트가 열려 있는지 확인합니다",
+      "HEARTBEAT": "모니터링 중인 서비스가 정상 작동 중임을 나타내는 '하트비트'를 모니터링 서비스로 보냅니다"
+    }
+  },
+  "meta": {
+    "hour": "시간",
+    "minute": "분",
+    "second": "초",
+    "fastTip": "새로 고침이 너무 자주 발생했습니다. 잠시 후 다시 시도해 주세요",
+    "refresh": "재시도",
+    "today": "오늘"
+  },
+  "login": {
+    "tip": "사이트는 비밀번호로 보호되어 있습니다. 비밀번호를 입력하여 확인하십시오.",
+    "password": "비밀번호",
+    "placeholder": "비밀번호 입력",
+    "submit": "로그인",
+    "error": "비밀번호가 일치하지 않습니다. 다시 시도해 주세요.",
+    "success": "로그인 성공"
+  }
+}

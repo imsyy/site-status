@@ -2,20 +2,27 @@
 <template>
   <div class="site-login">
     <n-card class="login-content" hoverable>
-      <n-alert :show-icon="false"> 站点已开启密码保护，请输入密码登录后查看 </n-alert>
+      <n-alert :show-icon="false">
+        {{ $t("login.tip") }}
+      </n-alert>
       <n-form ref="formRef" :model="formData" :rules="formRules">
-        <n-form-item label="密码" path="password">
+        <n-form-item :label="$t('login.password')" path="password">
           <n-input
             v-model:value="formData.password"
+            :placeholder="$t('login.placeholder')"
             type="password"
             show-password-on="mousedown"
-            placeholder="请输入密码"
             @keyup.enter="toLogin"
           />
         </n-form-item>
       </n-form>
-      <n-button :loading="loading" :disabled="loading" type="primary" @click="toLogin">
-        {{ loading ? "正在登录" : "登录" }}
+      <n-button
+        :loading="loading"
+        :disabled="loading"
+        type="primary"
+        @click="toLogin"
+      >
+        {{ $t("login.submit") }}
       </n-button>
     </n-card>
   </div>
@@ -25,6 +32,7 @@
 import type { FormInst, FormRules } from "naive-ui";
 import SHA256 from "crypto-js/sha256";
 
+const { t } = useI18n();
 const statusStore = useStatusStore();
 
 // 表单数据
@@ -33,7 +41,7 @@ const formData = ref<{ password: string }>({ password: "" });
 const formRules: FormRules = {
   password: {
     required: true,
-    message: "请输入密码",
+    message: t("login.placeholder"),
     trigger: ["input", "blur"],
   },
 };
@@ -53,10 +61,10 @@ const toLogin = useDebounce(
       const password = SHA256(formData.value.password).toString();
       await $fetch("/api/verify", { method: "POST", body: { password } });
       statusStore.loginStatus = true;
-      window.$message.success("登录成功");
+      window.$message.success(t("login.success"));
     } catch (error) {
       console.error("error in login", error);
-      window.$message.error("密码错误，请重新输入");
+      window.$message.error(t("login.error"));
     } finally {
       loading.value = false;
     }

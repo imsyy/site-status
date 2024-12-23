@@ -1,11 +1,4 @@
-// 全站状态文本
-export const siteGlobalText: { [key: string]: string } = {
-  loading: "站点状态加载中",
-  unknown: "站点状态未知",
-  normal: "站点运行正常",
-  error: "全部站点出现异常",
-  warn: "部分站点出现异常",
-};
+import type { SelectOption } from "naive-ui";
 
 // 站点监控类型
 export const siteType: { [key: number]: { tag: string; text?: string } } = {
@@ -28,11 +21,22 @@ export const siteType: { [key: number]: { tag: string; text?: string } } = {
   },
 };
 
-// 站点状态类型
-export const siteStatus: { [key: number]: { text: string; type: string } } = {
-  0: { text: "暂停检测", type: "unknown" },
-  1: { text: "还未检查", type: "unknown" },
-  2: { text: "正常访问", type: "normal" },
-  8: { text: "站点异常", type: "error" },
-  9: { text: "无法访问", type: "error" },
-};
+// 语言数据
+export const langData: SelectOption[] = [
+  {
+    label: "简体中文",
+    value: "zh-CN",
+  },
+  {
+    label: "English",
+    value: "en",
+  },
+  {
+    label: "日本語",
+    value: "ja-JP",
+  },
+  {
+    label: "한국어",
+    value: "ko-KR",
+  },
+];

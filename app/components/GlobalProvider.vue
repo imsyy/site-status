@@ -1,8 +1,8 @@
 <!-- 全局配置 -->
 <template>
   <n-config-provider
-    :locale="zhCN"
-    :date-locale="dateZhCN"
+    :locale="siteLang.locale"
+    :date-locale="siteLang.date"
     :theme="theme"
     :theme-overrides="themeOverrides"
     abstract
@@ -41,6 +41,14 @@ import {
 
 const osTheme = useOsTheme();
 const colorMode = useColorMode();
+const statusStore = useStatusStore();
+
+// 站点语言
+const siteLang = computed(() =>
+  statusStore.siteLang === "zh-CN"
+    ? { locale: zhCN, date: dateZhCN }
+    : { locale: undefined, date: undefined },
+);
 
 // 获取明暗模式
 const theme = computed(() => {

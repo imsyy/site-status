@@ -16,14 +16,16 @@
             <n-popover>
               <template #trigger>
                 <n-tag :bordered="false" size="small" round>
-                  {{ siteType[site.type]?.tag || "HTTP" }} /
+                  {{ siteTypeMap[site.type]?.tag || "HTTP" }} /
                   {{ formatInterval(site?.interval) }}
                 </n-tag>
               </template>
               <n-text>
                 {{
-                  `每间隔 ${formatInterval(site?.interval)}，` + siteType[site.type]?.text ||
-                  "30s" + "，来判断段站点是否运行正常"
+                  $t("card.type.tip", {
+                    interval: formatInterval(site?.interval) || "30s",
+                    type: siteTypeMap[site.type]?.text,
+                  })
                 }}
               </n-text>
             </n-popover>
@@ -43,19 +45,27 @@
           </n-flex>
           <n-flex
             :style="{
-              '--bg-color': `var(--${siteStatus[site.status]?.type || 'unknown'}-color)`,
+              '--bg-color': `var(--${siteStatusMap[site.status]?.type || 'unknown'}-color)`,
             }"
             class="status"
             align="center"
           >
             <div v-if="site.status !== 0" class="point" />
             <Icon v-else name="icon:pause" />
-            <n-text>{{ siteStatus[site.status]?.text }}</n-text>
+            <n-text>{{ siteStatusMap[site.status]?.text }}</n-text>
           </n-flex>
         </n-flex>
         <!-- 每日数据 -->
-        <n-flex v-if="site?.days?.length" :size="2" class="timeline" justify="space-between">
-          <n-popover v-for="(day, dayIndex) in site.days" :key="day?.date || dayIndex">
+        <n-flex
+          v-if="site?.days?.length"
+          :size="2"
+          class="timeline"
+          justify="space-between"
+        >
+          <n-popover
+            v-for="(day, dayIndex) in site.days"
+            :key="day?.date || dayIndex"
+          >
             <template #trigger>
               <div
                 :style="{
@@ -66,18 +76,22 @@
             </template>
             <div class="day-data">
               <n-text class="date" depth="3">
-                {{ day?.date ? formatTime(day.date) : "未知日期" }}
+                {{ day?.date ? formatTime(day.date) : $t("card.unknownDate") }}
               </n-text>
               <!-- 详细 -->
               <n-text v-if="day?.percent >= 100">
-                {{ `当日可用率 ${day?.percent}%` }}
+                {{ $t("card.percent", { percent: day?.percent }) }}
               </n-text>
               <n-text v-else-if="day?.percent > 0 && day?.percent < 100">
                 {{
-                  `故障 ${day?.down?.times} 次，累计故障时长 ${formatDuration(day?.down?.duration)}，当日可用率 ${day?.percent}%`
+                  $t("card.percentData", {
+                    times: day?.down?.times,
+                    duration: formatDuration(day?.down?.duration),
+                    percent: day?.percent,
+                  })
                 }}
               </n-text>
-              <n-text v-else>当日无数据</n-text>
+              <n-text v-else>{{ $t("card.unknownData") }}</n-text>
             </div>
           </n-popover>
         </n-flex>
@@ -88,13 +102,22 @@
           </n-text>
           <n-text v-if="site?.down?.times" depth="3">
             {{
-              `最近 ${site?.days?.length} 天内故障 ${site?.down?.times} 次，累计故障时长 ${formatDuration(site?.down?.duration)}，平均可用率 ${site?.percent}%`
+              $t("card.summaryData", {
+                times: site?.down?.times,
+                duration: formatDuration(site?.down?.duration),
+                percent: site?.percent,
+              })
             }}
           </n-text>
           <n-text v-else depth="3">
-            {{ `最近 ${site?.days?.length} 天内可用率 ${site.percent}%` }}
+            {{
+              $t("card.summary", {
+                days: site?.days?.length,
+                percent: site?.percent,
+              })
+            }}
           </n-text>
-          <n-text class="date" depth="3">今日</n-text>
+          <n-text class="date" depth="3">{{ $t("meta.today") }}</n-text>
         </n-flex>
       </n-card>
     </div>
@@ -109,11 +132,13 @@
           <n-result
             v-else
             status="error"
-            title="出错啦"
-            description="接口调用超限或请求错误，请稍后重试"
+            :title="$t('card.error')"
+            :description="$t('card.errorText')"
           >
             <template #footer>
-              <n-button tertiary round @click="refresh"> 重试 </n-button>
+              <n-button tertiary round @click="refresh">
+                {{ $t("meta.refresh") }}
+              </n-button>
             </template>
           </n-result>
         </Transition>
@@ -124,12 +149,32 @@
 
 <script setup lang="ts">
 import type { SiteStatusType, SiteType } from "~~/types/main";
-import { siteType, siteStatus } from "~/assets/data/text";
 
+const { t } = useI18n();
 const statusStore = useStatusStore();
 
+// 站点类型
+const siteStatusMap = computed(() => ({
+  0: { text: t("card.status.stop"), type: "unknown" },
+  1: { text: t("card.status.unknown"), type: "unknown" },
+  2: { text: t("card.status.normal"), type: "normal" },
+  8: { text: t("card.status.error"), type: "error" },
+  9: { text: t("card.status.down"), type: "error" },
+}));
+
+// 请求类型
+const siteTypeMap = computed(() => ({
+  1: { tag: "HTTP", text: t("card.type.HTTP") },
+  2: { tag: "KEYWORD", text: t("card.type.KEYWORD") },
+  3: { tag: "PING", text: t("card.type.PING") },
+  4: { tag: "PORT", text: t("card.type.PORT") },
+  5: { tag: "HEARTBEAT", text: t("card.type.HEARTBEAT") },
+}));
+
 // 全部站点数据
-const siteData = computed<SiteStatusType[] | undefined>(() => statusStore.siteData?.data);
+const siteData = computed<SiteStatusType[] | undefined>(
+  () => statusStore.siteData?.data,
+);
 
 // 当天站点状态
 const getDayStatus = (percent: number): SiteType => {
@@ -209,7 +254,7 @@ onMounted(getSiteData);
       margin: 15px 0 10px;
       .day {
         height: 26px;
-        flex-grow: 1;
+        flex: 1;
         border-radius: 25px;
         background-color: var(--normal-color);
         transition: transform 0.3s;

@@ -33,6 +33,8 @@
 const config = useRuntimeConfig();
 const statusStore = useStatusStore();
 
+const { setLocale } = useI18n();
+
 // 加载状态
 const siteLoaded = ref<boolean>(false);
 
@@ -56,26 +58,39 @@ const siteScroll = (e: Event) => {
   statusStore.scrollTop = scrollTop;
 };
 
+// 更改站点语言
+const setSiteLang = (lang: string) => {
+  setLocale(lang);
+  useHead({ htmlAttrs: { lang } });
+};
+
 // 监听站点状态
 watch(
   () => statusStore.siteStatus,
   (status) => {
     const { siteTitle } = config.public;
-    // 错误总数
+    // 错误数据
+    const isError = status === "error" || status === "warn";
     const error = statusStore.siteData?.status?.error || 0;
     const unknown = statusStore.siteData?.status?.unknown || 0;
     // 更改信息
     useHead({
       // 更改标题
-      title:
-        status === "error" || status === "warn"
-          ? `${error + unknown} 异常 | ` + siteTitle
-          : siteTitle,
+      title: isError ? `( ${error + unknown} ) ` + siteTitle : siteTitle,
     });
+    // 更改图标
+    useFavicon(isError ? "/favicon-error.ico" : "/favicon.ico");
   },
 );
 
-onMounted(checkSite);
+// 语言更改
+watch(() => statusStore.siteLang, setSiteLang);
+
+onBeforeMount(checkSite);
+
+onMounted(() => {
+  setSiteLang(statusStore.siteLang);
+});
 </script>
 
 <style lang="scss" scoped>

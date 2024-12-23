@@ -1,6 +1,10 @@
 <!-- 导航栏 -->
 <template>
-  <nav id="nav" :class="{ scroll: statusStore.scrollTop > 0 }" :style="{ color: iconColor }">
+  <nav
+    id="nav"
+    :class="{ scroll: statusStore.scrollTop > 0 }"
+    :style="{ color: iconColor }"
+  >
     <div class="nav-content">
       <span class="logo">{{ config.public.siteTitle }}</span>
       <n-flex align="center" justify="end">
@@ -20,9 +24,33 @@
             </template>
           </n-button>
         </Transition>
+        <!-- 语言 -->
+        <n-popselect
+          v-model:value="statusStore.siteLang"
+          :options="langData"
+          trigger="click"
+        >
+          <n-button
+            :focusable="false"
+            :color="iconColor"
+            size="large"
+            quaternary
+            circle
+          >
+            <template #icon>
+              <Icon name="icon:language" />
+            </template>
+          </n-button>
+        </n-popselect>
         <!-- 菜单 -->
         <n-dropdown trigger="click" :options="navMenu">
-          <n-button :focusable="false" :color="iconColor" size="large" quaternary circle>
+          <n-button
+            :focusable="false"
+            :color="iconColor"
+            size="large"
+            quaternary
+            circle
+          >
             <template #icon>
               <Icon name="icon:menu" />
             </template>
@@ -36,22 +64,45 @@
 <script setup lang="ts">
 import { NIcon, type DropdownOption } from "naive-ui";
 import { Icon } from "#components";
+import { langData } from "~/assets/data/text";
 
+const { t } = useI18n();
 const colorMode = useColorMode();
 const config = useRuntimeConfig();
 const statusStore = useStatusStore();
 
 // 图标渲染
-const renderIcon = (icon: string) => () => h(NIcon, null, () => h(Icon, { name: icon }));
+const renderIcon = (icon: string) => () =>
+  h(NIcon, null, () => h(Icon, { name: icon }));
 
 // 导航栏菜单
-const navMenu: DropdownOption[] = [
+const navMenu = computed<DropdownOption[]>(() => [
+  {
+    key: "github",
+    label: "GitHub",
+    icon: renderIcon("icon:github"),
+    props: {
+      onClick: () => window.open("https://github.com/imsyy/site-status"),
+    },
+  },
   {
     key: "about",
-    label: "关于本站",
+    label: t("nav.about"),
     icon: renderIcon("icon:info"),
   },
-];
+  {
+    key: "logout",
+    label: t("nav.logout"),
+    icon: renderIcon("icon:logout"),
+    props: {
+      onClick: () => {
+        document.cookie =
+          "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure; SameSite=Lax;";
+        window.location.reload();
+      },
+    },
+  },
+]);
 
 // 模式图标
 const themeIcon = computed(() => `icon:${colorMode.preference}-mode`);
@@ -64,7 +115,8 @@ const iconColor = computed<string | undefined>(() =>
 // 切换明暗模式
 const toggleTheme = () => {
   const themeList = ["light", "dark", "system"];
-  const themeValue = themeList[(themeList.indexOf(colorMode.preference) + 1) % 3];
+  const themeValue =
+    themeList[(themeList.indexOf(colorMode.preference) + 1) % 3];
   if (themeValue) colorMode.preference = themeValue;
 };
 </script>

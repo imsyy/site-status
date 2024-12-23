@@ -21,18 +21,18 @@
                 {{ siteGlobalText[statusStore.siteStatus] }}
               </span>
               <span v-if="statusStore.siteStatus === 'loading'" class="tip">
-                请稍等片刻 ...
+                {{ $t("header.loading") }}
               </span>
               <span
                 v-else-if="statusStore.siteStatus === 'unknown'"
                 class="tip"
               >
-                这可能是临时性问题，请刷新后重试
+                {{ $t("header.unknown") }}
               </span>
               <!-- 更新频率 -->
               <n-flex v-else :size="0" class="tip" align="center">
                 <span>
-                  更新于
+                  {{ $t("header.update") }}
                   {{
                     formatTime(statusStore.siteData?.timestamp || 0, {
                       showTime: true,
@@ -40,7 +40,9 @@
                     })
                   }}
                 </span>
-                <span>将于 {{ nextUpdateTime }} 后刷新</span>
+                <span>
+                  {{ $t("header.updateAt", { time: nextUpdateTime }) }}
+                </span>
                 <n-button
                   :focusable="false"
                   color="#fff"
@@ -84,23 +86,41 @@
 </template>
 
 <script setup lang="ts">
-import { siteGlobalText } from "~/assets/data/text";
-
+const { t } = useI18n();
 const statusStore = useStatusStore();
 
 // 倒计时
 const updateTime = ref<number>(300);
+
+// 站点状态文本
+const siteGlobalText = computed(() => ({
+  loading: t("site.loading"),
+  unknown: t("site.unknown"),
+  normal: t("site.normal"),
+  error: t("site.error"),
+  warn: t("site.warn"),
+}));
 
 // 更新倒计时
 const nextUpdateTime = computed(() => {
   const time = updateTime.value;
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
-  return minutes > 0 ? `${minutes} 分 ${seconds} 秒` : `${seconds} 秒`;
+  return minutes > 0
+    ? `${minutes} ${t("meta.minute")} ${seconds} ${t("meta.second")}`
+    : `${seconds} ${t("meta.second")}`;
 });
 
 // 更新数据
 const refresh = async () => {
+  const lastUpdate = statusStore.siteData?.timestamp || 0;
+  if (!lastUpdate) return;
+  // 小于 5 分钟
+  if (Date.now() - lastUpdate < 5 * 60 * 1000) {
+    window.$message.warning(t("meta.fastTip"));
+    return;
+  }
+  updateTime.value = 300;
   await getSiteData();
 };
 

@@ -1,5 +1,5 @@
-import { signJwt } from "../utils/jwt";
 import SHA256 from "crypto-js/sha256";
+import { signJwt } from "../utils/jwt";
 
 export default defineEventHandler(
   async (

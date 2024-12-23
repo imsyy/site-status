@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import dayjs from "dayjs";
+import { formatNumber } from "./helper";
 import type {
   MonitorsDataResult,
   SiteDaysStatus,
   SiteStatusType,
-} from "~/types/main";
-import { formatNumber } from "./helper";
-import dayjs from "dayjs";
+} from "~~/types/main";
 
 /**
  * Format site data.
@@ -45,8 +45,10 @@ export const formatSiteData = (
         // 修改每日数据
         if (dateIndex !== undefined) {
           // 更新每日数据
-          dailyData[dateIndex].down.times += 1;
-          dailyData[dateIndex].down.duration += log.duration;
+          if (dailyData[dateIndex]) {
+            dailyData[dateIndex].down.times += 1;
+            dailyData[dateIndex].down.duration += log.duration;
+          }
         }
         // 更新总数据
         total.times += 1;

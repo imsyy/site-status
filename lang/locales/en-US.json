@@ -1,0 +1,68 @@
+{
+  "uptimeRobot": "UptimeRobot",
+  "site": {
+    "loading": "Site status loading",
+    "unknown": "Site status unknown",
+    "normal": "Site is running normally",
+    "error": "All sites encountered issues",
+    "warn": "Some sites encountered issues"
+  },
+  "nav": {
+    "about": "About this site",
+    "logout": "Logout"
+  },
+  "header": {
+    "loading": "Please wait a moment ...",
+    "unknown": "This might be a temporary issue. Please try refreshing.",
+    "update": "Updated at",
+    "updateAt": "Will refresh in {time}"
+  },
+  "footer": {
+    "basedOn": "Based on",
+    "interface": "Interface",
+    "checkFrequency": "Check Frequency",
+    "fiveMinutes": "5 minutes"
+  },
+  "card": {
+    "unknownDate": "Unknown date",
+    "unknownData": "No data for today",
+    "percent": "Daily availability {percent}%",
+    "percentData": "Failed {times} times, total downtime {duration}, daily availability {percent}%",
+    "summary": "Availability in the last {days} days {percent}%",
+    "summaryData": "Failed {times} times in the last {days} days, total downtime {duration}, average availability {percent}%",
+    "error": "Error",
+    "errorText": "Interface call limit exceeded or request error. Please try again later.",
+    "status": {
+      "stop": "Paused",
+      "unknown": "Not Checked Yet",
+      "pause": "Paused",
+      "normal": "Normal",
+      "error": "Error",
+      "down": "Down"
+    },
+    "type": {
+      "tip": "Check if the site is running properly every {interval} for {type}",
+      "HTTP": "Monitor the availability of the target service by sending HTTP or HTTPS requests",
+      "KEYWORD": "Get the page content and check if the returned content contains the specified keyword",
+      "PING": "Send a Ping request to the target server using the ICMP protocol",
+      "PORT": "Check if the specified port of the target server is open",
+      "HEARTBEAT": "The monitored service actively sends a 'heartbeat signal' to the monitoring service to indicate that it is running normally"
+    }
+  },
+  "meta": {
+    "hour": "hour",
+    "minute": "minute",
+    "second": "second",
+    "fastTip": "Refreshing too frequently. Please try again later.",
+    "refresh": "Retry",
+    "today": "Today"
+  },
+  "login": {
+    "tip": "The site is password protected. Please enter the password to view.",
+    "password": "Password",
+    "placeholder": "Enter password",
+    "submit": "Login",
+    "error": "Password is incorrect",
+    "success": "Login successful"
+  }
+}

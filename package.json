@@ -16,12 +16,14 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "format": "prettier --write .",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/images/icons/logo.svg",
+    "lint": "eslint .",
+    "pwa": "pwa-assets-generator --preset minimal-2023 public/images/icons/normal/logo.svg",
     "vercel": "vercel login && vercel --prod"
   },
   "dependencies": {
     "@nuxt/icon": "1.10.2",
     "@nuxthub/core": "0.8.10",
+    "@nuxtjs/i18n": "9.0.0-rc.2",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
     "jose": "^5.9.6",

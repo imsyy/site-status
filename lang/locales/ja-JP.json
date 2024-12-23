@@ -1,0 +1,68 @@
+{
+  "uptimeRobot": "UptimeRobot",
+  "site": {
+    "loading": "サイトの状態を読み込み中",
+    "unknown": "サイトの状態は不明",
+    "normal": "サイトは正常に動作しています",
+    "error": "すべてのサイトに異常があります",
+    "warn": "一部のサイトに異常があります"
+  },
+  "nav": {
+    "about": "このサイトについて",
+    "logout": "ログアウト"
+  },
+  "header": {
+    "loading": "しばらくお待ちください ...",
+    "unknown": "一時的な問題かもしれません。ページをリフレッシュして再試行してください",
+    "update": "更新日時",
+    "updateAt": "{time}後に更新されます"
+  },
+  "footer": {
+    "basedOn": "基づいています",
+    "interface": "インターフェース",
+    "checkFrequency": "チェック頻度",
+    "fiveMinutes": "5分"
+  },
+  "card": {
+    "unknownDate": "不明な日付",
+    "unknownData": "データなし",
+    "percent": "当日の稼働率 {percent}%",
+    "percentData": "障害 {times} 回、合計障害時間 {duration}、当日の稼働率 {percent}%",
+    "summary": "最近 {days} 日間の稼働率 {percent}%",
+    "summaryData": "最近 {days} 日間の障害 {times} 回、合計障害時間 {duration}、平均稼働率 {percent}%",
+    "error": "エラーが発生しました",
+    "errorText": "APIの呼び出し制限を超過するか、リクエストにエラーが発生しました。後で再試行してください",
+    "status": {
+      "stop": "チェック停止",
+      "unknown": "まだチェックしていません",
+      "pause": "チェック停止",
+      "normal": "正常にアクセス可能",
+      "error": "サイトに異常があります",
+      "down": "アクセス不可"
+    },
+    "type": {
+      "tip": "{interval}ごとに、{type}でサイトが正常かどうかを確認します",
+      "HTTP": "HTTPまたはHTTPSリクエストを送信してターゲットサービスの可用性を監視します",
+      "KEYWORD": "ページ内容を取得し、指定されたキーワードが含まれているかを確認します",
+      "PING": "ICMPプロトコルを使用してターゲットサーバーにPingリクエストを送信します",
+      "PORT": "ターゲットサーバーの指定ポートが開いているかを確認します",
+      "HEARTBEAT": "監視されているサービスが正常に動作していることを示す「ハートビート」を監視サービスに送信します"
+    }
+  },
+  "meta": {
+    "hour": "時間",
+    "minute": "分",
+    "second": "秒",
+    "fastTip": "リフレッシュが頻繁すぎます。後で再試行してください",
+    "refresh": "リトライ",
+    "today": "今日"
+  },
+  "login": {
+    "tip": "サイトはパスワードで保護されています。パスワードを入力して表示してください。",
+    "password": "パスワード",
+    "placeholder": "パスワードを入力",
+    "submit": "ログイン",
+    "error": "パスワードが正しくありません",
+    "success": "ログイン成功"
+  }
+}

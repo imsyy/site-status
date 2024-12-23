@@ -1,8 +1,8 @@
 // https://uptimerobot.com/api/#methods
+import dayjs from "dayjs";
 import type { MonitorsDataResult, MonitorsResult } from "~~/types/main";
 import { getCache, setCache } from "~/utils/cache-server";
 import { formatSiteData } from "~/utils/format";
-import dayjs from "dayjs";
 
 const getRanges = ():
   | {
@@ -20,7 +20,9 @@ const getRanges = ():
     // 生成日期范围数组
     for (let d = 0; d < days; d++) dates.push(today.subtract(d, "day"));
     // 生成自定义历史数据范围
-    const ranges = dates.map((date) => `${date.unix()}_${date.add(1, "day").unix()}`);
+    const ranges = dates.map(
+      (date) => `${date.unix()}_${date.add(1, "day").unix()}`,
+    );
     const start = dates[dates.length - 1].unix();
     const end = dates[0].add(1, "day").unix();
     ranges.push(`${start}_${end}`);
