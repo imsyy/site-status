@@ -1,4 +1,4 @@
-import SHA256 from "crypto-js/sha256";
+import SHA256 from "crypto-js/sha256.js";
 import { signJwt } from "../utils/jwt";
 
 export default defineEventHandler(

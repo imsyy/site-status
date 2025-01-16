@@ -64,12 +64,12 @@ export default defineNuxtConfig({
         { rel: "icon", href: siteConfig.siteLogo },
         {
           rel: "apple-touch-icon",
-          href: "/images/icons/apple-touch-icon-180x180.png",
+          href: "/images/icons/normal/apple-touch-icon-180x180.png",
           sizes: "180x180",
         },
         {
           rel: "mask-icon",
-          href: "/images/icons/maskable-icon-512x512.png",
+          href: "/images/icons/normal/maskable-icon-512x512.png",
           color: "#ffffff",
         },
         // manifest
@@ -158,22 +158,22 @@ export default defineNuxtConfig({
       theme_color: "#ffffff",
       icons: [
         {
-          src: "/images/icons/pwa-64x64.png",
+          src: "/images/icons/normal/pwa-64x64.png",
           sizes: "64x64",
           type: "image/png",
         },
         {
-          src: "/images/icons/pwa-192x192.png",
+          src: "/images/icons/normal/pwa-192x192.png",
           sizes: "192x192",
           type: "image/png",
         },
         {
-          src: "/images/icons/pwa-512x512.png",
+          src: "/images/icons/normal/pwa-512x512.png",
           sizes: "512x512",
           type: "image/png",
         },
         {
-          src: "/images/icons/maskable-icon-512x512.png",
+          src: "/images/icons/normal/maskable-icon-512x512.png",
           sizes: "512x512",
           type: "image/png",
           purpose: "maskable",
