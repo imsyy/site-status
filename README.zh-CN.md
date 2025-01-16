@@ -15,6 +15,8 @@
 
 ## 👀 Demo
 
+> Demo password: `123456`
+
 - [IMSYY-站点监测](https://status.imsyy.top/)
 
 ## 🎉 特色
