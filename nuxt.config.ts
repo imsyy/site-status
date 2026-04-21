@@ -14,7 +14,7 @@ const siteConfig = {
   siteIcp: process.env.SITE_ICP || "",
   countDays: Number(process.env.COUNT_DAYS || 60),
   showLink: process.env.SHOW_LINK === "true" || true,
-  platform: process.env.DEPLOYMENT_PLATFORM || "cloudflare",
+  platform: process.env.DEPLOYMENT_PLATFORM || "edgeone",
   version: pkg.version,
 };
 
@@ -31,7 +31,8 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-lodash",
     "@nuxtjs/i18n",
-  ].concat(siteConfig.platform === "cloudflare" ? "@nuxthub/core" : ""),
+    ...(siteConfig.platform === "cloudflare" ? ["@nuxthub/core"] : []),
+  ],
   // ssr
   ssr: false,
   // devtools
@@ -43,47 +44,47 @@ export default defineNuxtConfig({
     head: {
       title: siteConfig.siteTitle,
       meta: [
-        {
-          name: "description",
-          content: siteConfig.siteDescription,
-        },
-        {
-          name: "keywords",
-          content: siteConfig.siteKeywords,
-        },
-        {
-          name: "viewport",
-          content: "width=device-width, initial-scale=1.0",
-        },
-        {
-          name: "theme-color",
-          content: "#ffffff",
-        },
-      ],
-      link: [
-        { rel: "icon", href: siteConfig.siteLogo },
-        {
-          rel: "apple-touch-icon",
-          href: "/images/icons/normal/apple-touch-icon-180x180.png",
-          sizes: "180x180",
-        },
-        {
-          rel: "mask-icon",
-          href: "/images/icons/normal/maskable-icon-512x512.png",
-          color: "#ffffff",
-        },
-        // manifest
-        process.env.NODE_ENV !== "development"
-          ? {
-              rel: "manifest",
-              href: "/manifest.webmanifest",
-            }
-          : undefined,
-      ],
-      htmlAttrs: {
-        lang: "zh-CN",
+      {
+        name: "description",
+        content: siteConfig.siteDescription
       },
-    },
+      {
+        name: "keywords",
+        content: siteConfig.siteKeywords
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1.0"
+      },
+      {
+        name: "theme-color",
+        content: "#ffffff"
+      }],
+
+      link: [
+      { rel: "icon", href: siteConfig.siteLogo },
+      {
+        rel: "apple-touch-icon",
+        href: "/images/icons/normal/apple-touch-icon-180x180.png",
+        sizes: "180x180"
+      },
+      {
+        rel: "mask-icon",
+        href: "/images/icons/normal/maskable-icon-512x512.png",
+        color: "#ffffff"
+      },
+      // manifest
+      process.env.NODE_ENV !== "development" ?
+      {
+        rel: "manifest",
+        href: "/manifest.webmanifest"
+      } :
+      undefined],
+
+      htmlAttrs: {
+        lang: "zh-CN"
+      }
+    }
   },
   // css
   css: ["~/style/main.scss", "~/style/animate.scss"],
@@ -93,7 +94,7 @@ export default defineNuxtConfig({
     apiKey: process.env.API_KEY,
     sitePassword: process.env.SITE_PASSWORD,
     siteSecretKey: process.env.SITE_SECRE_KEY || "site-status",
-    public: siteConfig,
+    public: siteConfig
   },
   devServer: { port: 8566 },
   future: { compatibilityVersion: 4 },
@@ -101,53 +102,53 @@ export default defineNuxtConfig({
   // vite
   vite: {
     plugins: [
-      AutoImport({
-        imports: [
-          {
-            "naive-ui": [
-              "useDialog",
-              "useMessage",
-              "useNotification",
-              "useLoadingBar",
-            ],
-          },
-        ],
-      }),
-      Components({
-        resolvers: [NaiveUiResolver()],
-      }),
-    ],
+    AutoImport({
+      imports: [
+      {
+        "naive-ui": [
+        "useDialog",
+        "useMessage",
+        "useNotification",
+        "useLoadingBar"]
+
+      }]
+
+    }),
+    Components({
+      resolvers: [NaiveUiResolver()]
+    })],
+
     css: {
       preprocessorOptions: {
         scss: {
-          silenceDeprecations: ["legacy-js-api"],
-        },
-      },
-    },
+          silenceDeprecations: ["legacy-js-api"]
+        }
+      }
+    }
   },
   // https://eslint.nuxt.com
   eslint: {
     config: {
       stylistic: {
         quotes: "double",
-        semi: true,
-      },
-    },
+        semi: true
+      }
+    }
   },
   // i18n
   i18n: {
-    vueI18n: "./lang/i18n.config.ts",
+    vueI18n: "./lang/i18n.config.ts"
   },
   // icon
   icon: {
     mode: "svg",
     customCollections: [
-      {
-        prefix: "icon",
-        dir: "./app/assets/icons",
-        normalizeIconName: false,
-      },
-    ],
+    {
+      prefix: "icon",
+      dir: "./app/assets/icons",
+      normalizeIconName: false
+    }]
+
   },
   // pwa
   pwa: {
@@ -157,28 +158,28 @@ export default defineNuxtConfig({
       description: siteConfig.siteDescription,
       theme_color: "#ffffff",
       icons: [
-        {
-          src: "/images/icons/normal/pwa-64x64.png",
-          sizes: "64x64",
-          type: "image/png",
-        },
-        {
-          src: "/images/icons/normal/pwa-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-        },
-        {
-          src: "/images/icons/normal/pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-        },
-        {
-          src: "/images/icons/normal/maskable-icon-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "maskable",
-        },
-      ],
-    },
-  },
+      {
+        src: "/images/icons/normal/pwa-64x64.png",
+        sizes: "64x64",
+        type: "image/png"
+      },
+      {
+        src: "/images/icons/normal/pwa-192x192.png",
+        sizes: "192x192",
+        type: "image/png"
+      },
+      {
+        src: "/images/icons/normal/pwa-512x512.png",
+        sizes: "512x512",
+        type: "image/png"
+      },
+      {
+        src: "/images/icons/normal/maskable-icon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable"
+      }]
+
+    }
+  }
 });
