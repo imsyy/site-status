@@ -13,10 +13,23 @@ const siteConfig = {
   siteLogo: process.env.SITE_LOGO || "/favicon.ico",
   siteIcp: process.env.SITE_ICP || "",
   countDays: Number(process.env.COUNT_DAYS || 60),
-  showLink: process.env.SHOW_LINK === "true" || true,
+  // 默认显示站点链接，可通过 SHOW_LINKS=false 关闭
+  showLink: process.env.SHOW_LINKS !== "false",
   platform: process.env.DEPLOYMENT_PLATFORM || "cloudflare",
   version: pkg.version,
 };
+
+// 安全提示：启用密码保护时必须显式设置一个强密钥
+if (
+  process.env.SITE_PASSWORD &&
+  !process.env.SITE_SECRET_KEY &&
+  !process.env.SITE_SECRE_KEY
+) {
+  console.warn(
+    "[site-status] SITE_PASSWORD 已设置但未配置 SITE_SECRET_KEY，将回落到内置默认密钥（不安全）。" +
+      "请设置一个强随机值，例如：openssl rand -hex 32",
+  );
+}
 
 export default defineNuxtConfig({
   // modules
@@ -29,13 +42,15 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxtjs/color-mode",
     "@vueuse/nuxt",
-    "nuxt-lodash",
     "@nuxtjs/i18n",
-  ].concat(siteConfig.platform === "cloudflare" ? "@nuxthub/core" : ""),
+    "nuxt-lodash",
+    // 仅在 Cloudflare 平台启用 NuxtHub
+    ...(siteConfig.platform === "cloudflare" ? ["@nuxthub/core"] : []),
+  ],
   // ssr
   ssr: false,
-  // devtools
-  devtools: { enabled: true },
+  // devtools - 生产环境不启用
+  devtools: { enabled: process.env.NODE_ENV !== "production" },
   // app
   app: {
     rootAttrs: { id: "nuxt-app" },
@@ -92,7 +107,11 @@ export default defineNuxtConfig({
     apiUrl: process.env.API_URL || "https://api.uptimerobot.com/v2/",
     apiKey: process.env.API_KEY,
     sitePassword: process.env.SITE_PASSWORD,
-    siteSecretKey: process.env.SITE_SECRE_KEY || "site-status",
+    // 兼容旧拼写 SITE_SECRE_KEY，推荐使用 SITE_SECRET_KEY
+    siteSecretKey:
+      process.env.SITE_SECRET_KEY ||
+      process.env.SITE_SECRE_KEY ||
+      "site-status",
     public: siteConfig,
   },
   devServer: { port: 8566 },
@@ -182,3 +201,4 @@ export default defineNuxtConfig({
     },
   },
 });
+
