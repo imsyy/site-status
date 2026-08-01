@@ -43,7 +43,6 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@vueuse/nuxt",
     "@nuxtjs/i18n",
-    "nuxt-lodash",
     // 仅在 Cloudflare 平台启用 NuxtHub
     ...(siteConfig.platform === "cloudflare" ? ["@nuxthub/core"] : []),
   ],
@@ -201,4 +200,5 @@ export default defineNuxtConfig({
     },
   },
 });
+
 
