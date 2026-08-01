@@ -25,6 +25,7 @@
   },
   "card": {
     "unknownDate": "Unknown date",
+    "unnamed": "Unnamed site",
     "unknownData": "No data for today",
     "percent": "Daily availability {percent}%",
     "percentData": "Failed {times} times, total downtime {duration}, daily availability {percent}%",
@@ -55,6 +56,7 @@
     "second": "second",
     "fastTip": "Refreshing too frequently. Please try again later.",
     "refresh": "Retry",
+    "fetchError": "Failed to fetch site data, please try again",
     "today": "Today"
   },
   "login": {
@@ -66,3 +68,5 @@
     "success": "Login successful"
   }
 }
+
+

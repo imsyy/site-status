@@ -2,7 +2,9 @@
 import dayjs from "dayjs";
 import type { MonitorsDataResult, MonitorsResult } from "~~/types/main";
 import { getCache, setCache } from "~/utils/cache-server";
-import { formatSiteData } from "~/utils/format";
+import { formatSiteData, type UptimeRobotResponse } from "~/utils/format";
+
+const CACHE_TTL = 1000 * 60; // 缓存 1 分钟
 
 const getRanges = ():
   | {
@@ -13,11 +15,11 @@ const getRanges = ():
     }
   | undefined => {
   try {
-    const dates = [];
     const config = useRuntimeConfig();
     const days = config.public.countDays;
     const today = dayjs(new Date().setHours(0, 0, 0, 0));
-    // 生成日期范围数组
+    // 生成日期范围数组（旧 -> 新）
+    const dates: dayjs.Dayjs[] = [];
     for (let d = 0; d < days; d++) dates.push(today.subtract(d, "day"));
     // 生成自定义历史数据范围
     const ranges = dates.map(
@@ -43,11 +45,10 @@ export default defineEventHandler(async (event): Promise<MonitorsResult> => {
     if (!apiUrl || !apiKey) {
       throw new Error("Missing API url or API key");
     }
-    // 若登录-验证 token
+    // 若开启密码保护，则校验登录 token
     if (sitePassword && siteSecretKey) {
       const token = getCookie(event, "authToken");
       if (!token) throw new Error("Please log in first");
-      // 验证 Token
       const isLogin = await verifyJwt(token);
       if (!isLogin) throw new Error("Invalid or expired token");
     }
@@ -82,14 +83,14 @@ export default defineEventHandler(async (event): Promise<MonitorsResult> => {
       custom_uptime_ranges: ranges,
     };
     // 尝试获取
-    const result = await $fetch(apiUrl + "getMonitors", {
+    const result = await $fetch<UptimeRobotResponse>(apiUrl + "getMonitors", {
       method: "POST",
       body,
     });
     // 处理数据
     const data = formatSiteData(result, dates);
     // 缓存数据
-    setCache(cacheKey, data, 1000 * 60);
+    setCache(cacheKey, data, CACHE_TTL);
     return {
       code: 200,
       message: "success",

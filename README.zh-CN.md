@@ -65,8 +65,9 @@
 
 ### 如何开启站点加密
 
-在环境变量中添加 `SITE_PASSWORD` 和 `SITE_SECRE_KEY`，都必须填写，缺一不可，其中 `SITE_PASSWORD`是站点密码，`SITE_SECRE_KEY` 是加密密钥，可随意填写
+在环境变量中添加 `SITE_PASSWORD` 和 `SITE_SECRET_KEY`，都必须填写，缺一不可，其中 `SITE_PASSWORD` 是站点密码，`SITE_SECRET_KEY` 是加密密钥，建议使用 `openssl rand -hex 32` 生成一个强随机值
 
 ## 鸣谢
 
 - [uptime-status](https://github.com/yb/uptime-status) 受此项目启发
+

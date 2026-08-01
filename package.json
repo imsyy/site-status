@@ -23,8 +23,8 @@
   "dependencies": {
     "@nuxt/icon": "^1.10.3",
     "@nuxthub/core": "^0.8.11",
+    "@intlify/message-compiler": "^10.0.5",
     "@nuxtjs/i18n": "^9.1.1",
-    "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
     "jose": "^5.9.6",
     "lru-cache": "^11.0.2",
@@ -38,14 +38,12 @@
     "@nuxt/eslint": "^0.7.5",
     "@nuxtjs/color-mode": "^3.5.2",
     "@pinia/nuxt": "^0.9.0",
-    "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.10.7",
     "@vite-pwa/assets-generator": "^0.2.6",
     "@vite-pwa/nuxt": "0.10.6",
     "@vueuse/core": "^12.4.0",
     "@vueuse/nuxt": "^12.4.0",
     "eslint": "^9.18.0",
-    "nuxt-lodash": "^2.5.3",
     "pinia-plugin-persistedstate": "^4.2.0",
     "prettier": "^3.4.2",
     "sass": "^1.83.4",
@@ -57,3 +55,4 @@
   },
   "packageManager": "pnpm@9.12.2"
 }
+

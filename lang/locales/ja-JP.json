@@ -25,6 +25,7 @@
   },
   "card": {
     "unknownDate": "不明な日付",
+    "unnamed": "名前のないサイト",
     "unknownData": "データなし",
     "percent": "当日の稼働率 {percent}%",
     "percentData": "障害 {times} 回、合計障害時間 {duration}、当日の稼働率 {percent}%",
@@ -55,7 +56,8 @@
     "second": "秒",
     "fastTip": "リフレッシュが頻繁すぎます。後で再試行してください",
     "refresh": "リトライ",
-    "today": "今日"
+    "today": "今日",
+    "fetchError": "サイトデータの取得に失敗しました。再試行してください"
   },
   "login": {
     "tip": "サイトはパスワードで保護されています。パスワードを入力して表示してください。",
@@ -66,3 +68,5 @@
     "success": "ログイン成功"
   }
 }
+
+

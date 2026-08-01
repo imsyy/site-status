@@ -1,10 +1,10 @@
 <!-- 站点数据卡片 -->
 <template>
   <Transition name="fade" mode="out-in">
-    <div v-if="!isEmpty(siteData)" class="site-cards">
+    <div v-if="siteData?.length" class="site-cards">
       <n-card
         v-for="(site, index) in siteData"
-        :key="index"
+        :key="site.id"
         :style="{ animationDelay: `${index * 0.1}s` }"
         class="site-item"
         hoverable
@@ -12,18 +12,20 @@
         <!-- 信息 -->
         <n-flex class="meta" justify="space-between">
           <n-flex :size="8" class="title" align="center">
-            <n-text class="site-name">{{ site.name }}</n-text>
+            <n-text class="site-name">
+              {{ site.name || $t("card.unnamed") }}
+            </n-text>
             <n-popover>
               <template #trigger>
                 <n-tag :bordered="false" size="small" round>
                   {{ siteTypeMap[site.type]?.tag || "HTTP" }} /
-                  {{ formatInterval(site?.interval) }}
+                  {{ formatInterval(site.interval) }}
                 </n-tag>
               </template>
               <n-text>
                 {{
                   $t("card.type.tip", {
-                    interval: formatInterval(site?.interval) || "30s",
+                    interval: formatInterval(site.interval) || "30s",
                     type: siteTypeMap[site.type]?.text,
                   })
                 }}
@@ -98,7 +100,10 @@
         <!-- 总结 -->
         <n-flex class="summary" justify="space-between">
           <n-text class="date" depth="3">
-            {{ formatTime(site?.days?.[0]?.date || 0) }}
+            {{
+              formatTime(site?.days?.[0]?.date || 0) ||
+              $t("card.unknownDate")
+            }}
           </n-text>
           <n-text v-if="site?.down?.times" depth="3">
             {{
@@ -191,10 +196,10 @@ const refresh = async () => {
     siteStatus: "loading",
     siteData: undefined,
   });
-  await getSiteData();
+  await getSiteData(t);
 };
 
-onMounted(getSiteData);
+onMounted(() => getSiteData(t));
 </script>
 
 <style lang="scss" scoped>

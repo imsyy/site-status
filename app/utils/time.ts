@@ -9,18 +9,19 @@ interface FormatTimeOptions {
 
 /**
  * 格式化时间
- * @param time 时间戳
+ * @param time 时间戳（秒或毫秒均可）
  * @param options 选项
  * @param options.showTime 是否显示时分秒
  * @param options.showOnlyTimeIfToday 若为今日，是否仅显示时分秒
- * @returns 格式化后的时间字符串
+ * @returns 格式化后的时间字符串，无效时间返回空字符串
  */
 export const formatTime = (
   time: number,
   options: FormatTimeOptions = {},
 ): string => {
-  if (!time) return "未知时间";
+  if (!time) return "";
   const { showTime = false, showOnlyTimeIfToday = false } = options;
+  // 兼容秒级时间戳
   const correctedTime = time < 10000000000 ? time * 1000 : time;
 
   const date = dayjs(correctedTime);
@@ -56,7 +57,7 @@ export const formatDuration = (seconds: number): string => {
 
 /**
  * 格式化检测时长
- * @param interval 时长
+ * @param interval 时长（秒）
  * @returns 格式化后的时长字符串
  */
 export const formatInterval = (interval: number): string => {

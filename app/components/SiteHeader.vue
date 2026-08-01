@@ -121,7 +121,7 @@ const refresh = async () => {
     return;
   }
   updateTime.value = 300;
-  await getSiteData();
+  await getSiteData(t);
 };
 
 // 执行倒计时
@@ -131,7 +131,7 @@ const { pause: pauseTime, resume: resumeTime } = useIntervalFn(
     if (updateTime.value === 0) {
       pauseTime();
       statusStore.siteStatus = "loading";
-      await getSiteData();
+      await getSiteData(t);
       updateTime.value = 300;
       resumeTime();
     }
@@ -139,6 +139,13 @@ const { pause: pauseTime, resume: resumeTime } = useIntervalFn(
   1000,
   { immediate: true },
 );
+
+// 标签页不可见时暂停倒计时，节省资源
+const documentVisibility = useDocumentVisibility();
+watch(documentVisibility, (visible) => {
+  if (visible === "visible") resumeTime();
+  else pauseTime();
+});
 </script>
 
 <style lang="scss" scoped>

@@ -30,7 +30,6 @@
 
 <script setup lang="ts">
 import type { FormInst, FormRules } from "naive-ui";
-import SHA256 from "crypto-js/sha256";
 
 const { t } = useI18n();
 const statusStore = useStatusStore();
@@ -50,15 +49,16 @@ const loading = ref<boolean>(false);
 // 尝试登录
 const toLogin = useDebounce(
   async () => {
+    // 表单校验失败则不发起请求
     try {
-      // 校验表单
       await formRef.value?.validate();
-      loading.value = true;
-      // 随机延时 - 开发环境
-      const delay = Math.floor(Math.random() * 1000) + 500;
-      await sleep(delay);
-      // 尝试登录
-      const password = SHA256(formData.value.password).toString();
+    } catch {
+      return;
+    }
+    loading.value = true;
+    try {
+      // 客户端哈希后提交，避免明文密码传输
+      const password = await sha256Hex(formData.value.password);
       await $fetch("/api/verify", { method: "POST", body: { password } });
       statusStore.loginStatus = true;
       window.$message.success(t("login.success"));
