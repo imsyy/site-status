@@ -200,5 +200,3 @@ export default defineNuxtConfig({
     },
   },
 });
-
-
