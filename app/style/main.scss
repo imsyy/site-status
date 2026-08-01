@@ -1,7 +1,7 @@
 :root {
   --main-bg-color: rgb(247, 247, 247);
   --main-card-color: rgb(255, 255, 255);
-  --mian-border-color: rgba(255, 255, 255, 0.09);
+  --main-border-color: rgba(255, 255, 255, 0.09);
   --main-box-shadow: rgba(0, 0, 0, 0.1);
   --cover-fill-color: 247, 247, 247;
   // 背景
@@ -20,7 +20,7 @@
   &.dark-mode {
     --main-bg-color: rgb(36, 36, 36);
     --main-card-color: rgb(66, 66, 66);
-    --mian-border-color: rgba(0, 0, 0, 0.1);
+    --main-border-color: rgba(0, 0, 0, 0.1);
     --cover-fill-color: 36, 36, 36;
     --cover-filter: brightness(80%);
   }
@@ -29,7 +29,6 @@
 * {
   margin: 0;
   padding: 0;
-  user-select: none;
   box-sizing: border-box;
   -webkit-user-drag: none;
 }
