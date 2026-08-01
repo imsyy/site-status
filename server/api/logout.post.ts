@@ -1,9 +1,13 @@
+const isProd = process.env.NODE_ENV === "production";
+
 export default eventHandler(
   async (event): Promise<{ code: number; message: string }> => {
     try {
       // 清除 authToken
       setCookie(event, "authToken", "", {
         httpOnly: true,
+        secure: isProd,
+        path: "/",
         maxAge: 0,
         sameSite: "strict",
       });
