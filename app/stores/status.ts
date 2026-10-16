@@ -13,7 +13,7 @@ export const useStatusStore = defineStore(
     // 滚动高度
     const scrollTop = ref<number>(0);
     // 站点语言
-    const siteLang = ref<SiteLangType>("zh-CN");
+    const siteLang = ref<SiteLangType>(getDefaultLang());
 
     return { loginStatus, siteStatus, siteData, scrollTop, siteLang };
   },

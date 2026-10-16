@@ -12,6 +12,7 @@ const siteConfig = {
   siteKeywords: process.env.SITE_KEYWORDS || "站点监测,监测,监控",
   siteLogo: process.env.SITE_LOGO || "/favicon.ico",
   siteIcp: process.env.SITE_ICP || "",
+  siteLang: process.env.SITE_LANG || "zh-CN",
   countDays: Number(process.env.COUNT_DAYS || 60),
   showLink: process.env.SHOW_LINK === "true" || true,
   platform: process.env.DEPLOYMENT_PLATFORM || "cloudflare",
@@ -81,7 +82,7 @@ export default defineNuxtConfig({
           : undefined,
       ],
       htmlAttrs: {
-        lang: "zh-CN",
+        lang: siteConfig.siteLang,
       },
     },
   },

@@ -67,6 +67,10 @@
 
 在环境变量中添加 `SITE_PASSWORD` 和 `SITE_SECRE_KEY`，都必须填写，缺一不可，其中 `SITE_PASSWORD`是站点密码，`SITE_SECRE_KEY` 是加密密钥，可随意填写
 
+### 如何设置默认语言
+
+站点会优先使用访客浏览器的语言（支持 `zh-CN`、`en`、`ja-JP`、`ko-KR`）。若浏览器语言不在其中，则使用环境变量 `SITE_LANG`，默认为 `zh-CN`。访客在菜单中手动选择的语言会被记住，并始终优先
+
 ## 鸣谢
 
 - [uptime-status](https://github.com/yb/uptime-status) 受此项目启发
